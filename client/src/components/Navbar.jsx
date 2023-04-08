@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Typography, styled, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
@@ -7,7 +8,8 @@ import { Container } from '@mui/system';
 import CustomButton from './CustomButton';
 import Slide from '@mui/material/Slide';
 
-function Navbar() {
+function Navbar({ user, logout }) {
+	console.log(user);
 	const [mobileMenu, setMobileMenu] = useState({
 		left: false,
 	});
@@ -85,6 +87,7 @@ function Navbar() {
 		},
 	}));
 
+
 	return (
 		<>
 			<Box sx={{ backgroundColor: '#E6F0FF' }}>
@@ -121,12 +124,25 @@ function Navbar() {
 							justifyContent: 'center',
 							gap: '1.5rem',
 						}}>
-						<Link to="/login" style={{ textDecoration: 'none' }}>
-							<NavLink variant="body2">Log In</NavLink>
-						</Link>
-						<Link to="/register" style={{ textDecoration: 'none' }}>
-							<CustomButton backgroundColor="#0F1B4C" color="#fff" hoverBgColor="#E6F0FF" buttonText="Register" />
-						</Link>
+
+						{localStorage.getItem('user') ? (
+							<>
+								<Link to="/" style={{ textDecoration: 'none' }}>
+									<NavLink onClick={logout} variant="body2">
+										Log Out
+									</NavLink>
+								</Link>
+							</>
+						) : (
+							<>
+								<Link to="/login" style={{ textDecoration: 'none' }}>
+									<NavLink variant="body2">Log In</NavLink>
+								</Link>
+								<Link to="/register" style={{ textDecoration: 'none' }}>
+									<CustomButton backgroundColor="#0F1B4C" color="#fff" hoverBgColor="#E6F0FF" buttonText="Register" />
+								</Link>
+							</>
+						)}
 					</Box>
 				</NavbarContainer>
 			</Box>
@@ -135,3 +151,13 @@ function Navbar() {
 }
 
 export default Navbar;
+
+{
+	/* 
+<Link to="/login" style={{ textDecoration: 'none' }}>
+							<NavLink variant="body2">Log In</NavLink>
+						</Link>
+						<Link to="/register" style={{ textDecoration: 'none' }}>
+							<CustomButton backgroundColor="#0F1B4C" color="#fff" hoverBgColor="#E6F0FF" buttonText="Register" />
+						</Link> */
+}
