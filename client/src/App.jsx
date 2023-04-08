@@ -12,6 +12,7 @@ import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import Dashboard from './components/pages/Dashboard';
 
+
 function App() {
 	const [user, setUser] = useState({
 		firstName: '',

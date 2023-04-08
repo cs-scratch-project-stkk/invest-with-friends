@@ -87,6 +87,7 @@ function Navbar({ user, logout }) {
 		},
 	}));
 
+
 	return (
 		<>
 			<Box sx={{ backgroundColor: '#E6F0FF' }}>
@@ -123,6 +124,7 @@ function Navbar({ user, logout }) {
 							justifyContent: 'center',
 							gap: '1.5rem',
 						}}>
+
 						{localStorage.getItem('user') ? (
 							<>
 								<Link to="/" style={{ textDecoration: 'none' }}>

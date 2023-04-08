@@ -58,6 +58,7 @@ function Footer() {
 			textAlign: 'center',
 		},
 	}));
+
 	return (
 		<>
 			<Box sx={{ paddingTop: 4, paddingBottom: 2 }}>
