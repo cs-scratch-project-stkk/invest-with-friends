@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const PORT = 5000;
 
 const router = require('./routes/index');
 
@@ -15,9 +15,9 @@ app.use('/api', router);
 // global error handling
 app.use((err, req, res, next) => {
   console.log(err);
-  return res.status(400);
+  return res.sendStatus(400);
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port: ${port}...`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}...`);
 });
