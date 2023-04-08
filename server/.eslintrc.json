@@ -15,13 +15,16 @@
       }
     },
     "rules": {
-      "indent": ["warn", 2],
-      "no-unused-vars": ["off", { "vars": "local" }],
-      "prefer-const": "warn",
-      "quotes": ["warn", "single"],
-      "react/prop-types": "off",
-      "semi": ["warn", "always"],
-      "space-infix-ops": "warn"
+        "no-console": "off",
+        "arrow-body-style": "off",
+        "object-curly-newline": "off",
+        "indent": ["warn", 2],
+        "no-unused-vars": ["off", { "vars": "local" }],
+        "prefer-const": "warn",
+        "quotes": ["warn", "single"],
+        "react/prop-types": "off",
+        "semi": ["warn", "always"],
+        "space-infix-ops": "warn"
     },
     "settings": {
       "react": { "version": "detect"}
