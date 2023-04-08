@@ -9,12 +9,13 @@ userService.userExists = async (email) => {
   return !!userEntry.length;
 };
 
-userService.createUser = async (username, email, password) => {
+userService.createUser = async (firstName, lastName, email, password) => {
   const query = (
-    'INSERT INTO users (username, email, password) '
-    + 'VALUES ($1, $2, $3)'
+    'INSERT INTO users (first_name, last_name, email, password) '
+    + 'VALUES ($1, $2, $3, $4)'
   );
-  const insert = await db.query(query, [username, email, password]);
+  const params = [firstName, lastName, email, password];
+  const insert = await db.query(query, params);
 
   return insert.rowCount === 1;
 };

@@ -4,13 +4,13 @@ const userController = {};
 
 userController.signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     if (await userExists(email)) {
       throw new Error('email already in use.');
     }
 
-    res.locals.createUserSuccess = await createUser(username, email, password);
+    res.locals.createUserSuccess = await createUser(firstName, lastName, email, password);
 
     return next();
   } catch (err) {
