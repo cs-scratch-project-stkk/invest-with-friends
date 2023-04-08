@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { Typography } from '@mui/material';
 
-const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
+function Dashboard({ user }) {
+	console.log(user);
+	return (
+		<>
+			<Typography sx={{ textAlign: 'center', paddingTop: '50px' }}>Hello {user.firstName} </Typography>
+		</>
+	);
 }
 
-export default Dashboard
+export default Dashboard;
