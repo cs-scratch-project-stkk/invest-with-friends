@@ -15,9 +15,9 @@ app.use('/api', router);
 // global error handling
 app.use((err, req, res, next) => {
   console.log(err);
-  return res.status(400);
+  return res.sendStatus(400);
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
