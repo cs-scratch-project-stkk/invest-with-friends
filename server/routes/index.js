@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const userController = require('../controllers/userController');
+const holdingsController = require('../controllers/holdingsController.js');
 
 // router.get('/login', loginController);
 // create new user (DB)
@@ -15,6 +16,9 @@ router.post('/signup', userController.signup, (req, res) => {
 
 // My portfolio
 // get users stocks/qty (DB)
+router.get('/holdings/:id', holdingsController.getHoldings, (req, res) => {
+    res.status(200).send(res.locals.holdings);
+  })
 // post/patch/delete updated qtys (DB)
 // get current closing price for all ticker symbols (API)
 
