@@ -1,10 +1,4 @@
 import React from 'react';
-import { Box, Container } from '@mui/system';
-import { Typography, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
 
 function Footer() {
 	const CustomContainer = styled(Container)(({ theme }) => ({

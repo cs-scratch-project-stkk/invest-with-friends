@@ -87,7 +87,6 @@ function Navbar({ user, logout }) {
 		},
 	}));
 
-
 	return (
 		<>
 			<Box sx={{ backgroundColor: '#E6F0FF' }}>
@@ -124,7 +123,6 @@ function Navbar({ user, logout }) {
 							justifyContent: 'center',
 							gap: '1.5rem',
 						}}>
-
 						{localStorage.getItem('user') ? (
 							<>
 								<Link to="/" style={{ textDecoration: 'none' }}>
@@ -151,13 +149,3 @@ function Navbar({ user, logout }) {
 }
 
 export default Navbar;
-
-{
-	/* 
-<Link to="/login" style={{ textDecoration: 'none' }}>
-							<NavLink variant="body2">Log In</NavLink>
-						</Link>
-						<Link to="/register" style={{ textDecoration: 'none' }}>
-							<CustomButton backgroundColor="#0F1B4C" color="#fff" hoverBgColor="#E6F0FF" buttonText="Register" />
-						</Link> */
-}
