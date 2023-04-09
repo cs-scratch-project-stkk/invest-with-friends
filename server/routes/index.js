@@ -19,6 +19,7 @@ router.post('/signup', userController.signup, (req, res) => {
 router.get('/holdings/:id', holdingsController.getHoldings, (req, res) => {
     res.status(200).send(res.locals.holdings);
   })
+  
 // post/patch/delete updated qtys (DB)
 router.post('/addHolding', holdingsController.addHolding, (req, res) => {
     const success = res.locals.addHoldingSuccess;
