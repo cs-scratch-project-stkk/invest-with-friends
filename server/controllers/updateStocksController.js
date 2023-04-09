@@ -13,7 +13,13 @@ updateStocksController.getTickers = async (req, res, next) => {
 
 updateStocksController.getClosingPrice = async (req, res, next) => {
     try {
-        res.locals.closingPrices = await updateStocksService.getClosingPrice(res.locals.tickers);
+        res.locals.updateClosingPriceSuccess = true;
+        for (let i = 0; i < res.locals.tickers.length; i++){
+            // let closingPrice = await updateStocksService.getClosingPrice(res.locals.tickers[i]);
+            const closingPrice = 25.42;
+            result = await updateStocksService.updateClosingPrices(res.locals.tickers[i], closingPrice)
+            if (!result) res.locals.updateClosingPriceSuccess = false;
+        }
         next();
     } catch(err) {
         return next(err)
