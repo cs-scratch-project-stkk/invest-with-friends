@@ -4,6 +4,8 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const holdingsController = require('../controllers/holdingsController.js');
+const relationshipsController = require('../controllers/relationshipsController');
+
 
 // router.get('/login', loginController);
 // create new user (DB)
@@ -42,10 +44,16 @@ router.delete('/updateHolding', holdingsController.updateHolding, (req, res) => 
 
 // Add Friend
 // post new friend (DB)
-
+router.post('/addRelationship', relationshipsController.addRelationship, (req, res) => {
+  const success = res.locals.addRelationshipSuccess;
+  const code = success ? 200 : 400;
+  return res.sendStatus(code);
+})
 // View friends
 // get friends (DB)
-
+router.get('/relationships/:id', relationshipsController.getRelationships, (req, res) => {
+  return res.status(200).send(res.locals.relationships);
+})
 // Share post
 
 // Newsfeed
