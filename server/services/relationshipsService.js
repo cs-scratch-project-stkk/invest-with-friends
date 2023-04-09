@@ -8,7 +8,6 @@ relationshipsService.addRelationship = async (user_id, follow_id) => {
     const params = [user_id, follow_id];
 
     const relationship = await db.query(query, params);
-    console.log(relationship.rowCount)
     return relationship.rowCount === 1;
 }
 
