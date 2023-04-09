@@ -6,14 +6,13 @@ const userController = require('../controllers/userController');
 const holdingsController = require('../controllers/holdingsController.js');
 const updateStocksController = require('../controllers/updateStocksController.js');
 
-// router.get('/login', loginController);
-// create new user (DB)
-// authenticate user (DB)
 router.post('/signup', userController.signup, (req, res) => {
-  const success = res.locals.createUserSuccess;
-  const code = success ? 200 : 400;
-  return res.sendStatus(code);
+  return res.status(200).json(res.locals.createdUser);
 });
+
+router.post('/login', userController.login, (req, res) => {
+  return res.status(200).json(res.locals.existingUser);
+})
 
 // My portfolio
 // get users stocks/qty (DB)
