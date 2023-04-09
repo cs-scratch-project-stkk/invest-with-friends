@@ -4,6 +4,7 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const holdingsController = require('../controllers/holdingsController.js');
+const updateStocksController = require('../controllers/updateStocksController.js');
 
 // router.get('/login', loginController);
 // create new user (DB)
@@ -20,8 +21,10 @@ router.get('/holdings/:id', holdingsController.getHoldings, (req, res) => {
     res.status(200).send(res.locals.holdings);
   })
 // post/patch/delete updated qtys (DB)
-// get current closing price for all ticker symbols (API)
-
+// get current closing price for all ticker symbols currently in database (API)
+router.get('/closingPrice', updateStocksController.getTickers, updateStocksController.getClosingPrice, (req, res) => {
+  res.sendStatus(200);
+})
 // Add Friend
 // post new friend (DB)
 
