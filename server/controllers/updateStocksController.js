@@ -12,6 +12,7 @@ updateStocksController.getTickers = async (req, res, next) => {
 }
 
 updateStocksController.getClosingPrice = async (req, res, next) => {
+    if (!res.locals.newStock) return 
     try {
         res.locals.updateClosingPriceSuccess = true;
         for (let i = 0; i < res.locals.tickers.length; i++){

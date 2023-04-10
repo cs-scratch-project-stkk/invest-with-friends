@@ -21,7 +21,11 @@ router.get('/holdings/:id', holdingsController.getHoldings, (req, res) => {
     res.status(200).send(res.locals.holdings);
   })
 // post/patch/delete updated qtys (DB)
-
+router.post('/addHolding', holdingsController.addHolding, (req, res) => {
+  const success = res.locals.addHoldingSuccess;
+  const code = success ? 200 : 400;
+  return res.sendStatus(code);
+})
 // get current closing price for all ticker symbols currently in database (API)
 router.patch('/closingPrice', updateStocksController.getTickers, updateStocksController.getClosingPrice, (req, res) => {
   const success = res.locals.updateClosingPriceSuccess;

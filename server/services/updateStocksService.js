@@ -37,8 +37,8 @@ updateStocksService.getClosingPrice = async (ticker) => {
 }
 
 updateStocksService.updateClosingPrices = async (ticker, closingPrice) => {
-    const query = ('UPDATE stocks SET closing_price = $2 WHERE ticker = $1');
-    const params = [ticker, closingPrice]
+    const query = ('UPDATE stocks SET closing_price = $2, last_updated = $3 WHERE ticker = $1');
+    const params = [ticker, closingPrice, Math.floor(Date.now()/1000)]
     const update = await db.query(query, params);
     return update.rowCount === 1;
 }
