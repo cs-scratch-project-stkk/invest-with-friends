@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,7 +11,8 @@ import Contact from './components/pages/Contact';
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import Dashboard from './components/pages/Dashboard';
-
+import SideNavbar from './components/SideNavbar';
+import Profile from './components/pages/Profile';
 
 function App() {
 	const [user, setUser] = useState({
@@ -21,19 +20,22 @@ function App() {
 		lastName: '',
 		email: '',
 		password: '',
+		id: '',
 	});
 
 	const login = (userData) => {
-		setUser(() => {
-			localStorage.setItem('user', JSON.stringify(userData));
-			return userData;
-		});
+		setUser({ id: userData.id, firstName: userData.firstName, lastName: userData.lastName, email: userData.email, password: userData.password });
+		localStorage.setItem('user', JSON.stringify(userData));
+		console.log('logged in confirmed');
 	};
 
 	const logout = () => {
-		setUser({ firstName: '', lastName: '', email: '', password: '' });
+		setUser({ id: '', firstName: '', lastName: '', email: '', password: '' });
 		localStorage.removeItem('user');
+		console.log('logged out confirmed');
 	};
+
+	// console.log(user);
 
 	return (
 		<>
@@ -45,8 +47,9 @@ function App() {
 					<Route path="/features" element={<Features />} />
 					<Route path="/contactus" element={<Contact />} />
 					<Route path="/register" element={<Register user={user} login={login} />} />
-					<Route path="/login" element={<Login />} />
+					<Route path="/login" element={<Login login={login} />} />
 					<Route path="/dashboard" element={<Dashboard user={user} />} />
+					<Route path="/profile" element={<Profile user={user} />} />
 				</Routes>
 			</Router>
 			<Toaster />
@@ -55,5 +58,3 @@ function App() {
 }
 
 export default App;
-
-
