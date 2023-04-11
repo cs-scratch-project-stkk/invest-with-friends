@@ -11,6 +11,24 @@ holdingsService.getHoldings = async (id) => {
     return holdings.rows;
 }
 
+holdingsService.marketValueCalcs = async (holdings) => {
+    //calculate market value fo each holding and keep running total of total market value of holdings
+    let totalMarketVal = 0;
+    for (let i = 0; i < holdings.length; i++){
+        let marketValue = holdings[i].stock_quantity * holdings[i].closing_price;
+        holdings[i].market_value = marketValue;
+        totalMarketVal+=marketValue;
+    }
+
+    //add percent of holdings property
+    for (let i = 0; i < holdings.length; i++){
+        let percentOfHoldings = holdings[i].market_value/totalMarketVal;
+        holdings[i].percent_of_holdings = percentOfHoldings;
+    }
+
+    return holdings;
+}
+
 holdingsService.addHolding = async (user_id, ticker, shares) => {
     //check to see if ticker exists on current database
     const query = ('SELECT stock_id FROM stocks WHERE ticker=$1');
