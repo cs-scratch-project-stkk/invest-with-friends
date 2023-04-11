@@ -12,12 +12,26 @@ userService.userExists = async (email) => {
 userService.createUser = async (firstName, lastName, email, password) => {
   const query = (
     'INSERT INTO users (first_name, last_name, email, password) '
-    + 'VALUES ($1, $2, $3, $4)'
+    + 'VALUES ($1, $2, $3, $4) RETURNING user_id AS id, first_name AS "firstName", last_name AS "lastName", email'
   );
   const params = [firstName, lastName, email, password];
-  const insert = await db.query(query, params);
+  const data = await db.query(query, params);
 
-  return insert.rowCount === 1;
+  const createdUser = data.rows[0]
+
+  return createdUser;
 };
+
+userService.getExistingUser = async (email) => {
+  const query = (
+    'SELECT user_id AS id, first_name AS "firstName", last_name AS "lastName", email, password FROM users WHERE email=$1'
+  );
+  const params = [email];
+
+  const data = await db.query(query, params);
+  const existingUser = data.rows[0];
+
+  return existingUser;
+}
 
 module.exports = userService;
