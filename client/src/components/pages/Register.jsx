@@ -23,6 +23,7 @@ function Register({ login, user }) {
 	const { firstName, lastName, email, password } = userData;
 
 	const handleSubmit = async (event) => {
+		console.log(userData);
 		event.preventDefault();
 		try {
 			const response = await axios.post(REGISTER_URL, JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }), {
