@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Profile from './pages/Profile';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
+import PeopleIcon from '@mui/icons-material/People';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 function SideNavbar() {
 	const navigate = useNavigate();
@@ -18,7 +20,12 @@ function SideNavbar() {
 		{
 			text: 'My Profile',
 			path: '/profile',
-			icon: <PersonIcon />,
+			icon: <AccountBoxIcon />,
+		},
+		{
+			text: 'Friends',
+			path: '/friends',
+			icon: <PeopleIcon />,
 		},
 	];
 
