@@ -5,7 +5,6 @@ const holdingsController = {};
 holdingsController.getHoldings = async (req, res, next) => {
     try {
         const  user_id  = req.params.id;
-        res.locals.holdings = await getHoldings(user_id);
         res.locals.holdings = await holdingsService.getHoldings(user_id);
         return next();
     } catch(err) {
