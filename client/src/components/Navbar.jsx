@@ -9,7 +9,6 @@ import CustomButton from './CustomButton';
 import Slide from '@mui/material/Slide';
 
 function Navbar({ user, logout }) {
-	console.log(user);
 	const [mobileMenu, setMobileMenu] = useState({
 		left: false,
 	});

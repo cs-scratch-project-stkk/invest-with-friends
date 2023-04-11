@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Box, styled, Typography, Stack, CssBaseline, InputBase } from '@mui/material';
+import { Box, styled, Typography, Stack, CssBaseline, InputBase, TextField, Button } from '@mui/material';
 import { Container } from '@mui/system';
 import SideNavbar from '../SideNavbar';
 import NewsFeed from '../NewsFeed';
-import Rightbar from '../Rightbar';
+import TablePortfolio from '../TablePortfolio';
+import axios from '../../api/axios';
 import SearchIcon from '@mui/icons-material/Search';
+import StockForm from '../StockForm';
+import CustomPieChart from '../CustomPieChart';
 
-function Dashboard({ user }) {
+const STOCK_URL = '/stockData';
+
+function Profile({ user }) {
 	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
 		padding: '0 10px',
@@ -14,9 +19,7 @@ function Dashboard({ user }) {
 		width: '20%',
 	}));
 
-	useEffect(() => {
-		localStorage.getItem('user');
-	});
+	const [stocksData, setStocksData] = useState([]);
 
 	return (
 		<>
@@ -28,13 +31,17 @@ function Dashboard({ user }) {
 					<SearchIcon sx={{ color: 'gray', width: '10%' }} />
 				</Search>
 
-				<Stack direction="row" spacing={1} mt={2} justifyContent="space-between">
+				<Stack direction="row" spacing={1} mt={2}>
 					<SideNavbar />
-					<NewsFeed />
+					<Stack direction="column">
+						<StockForm stocksData={stocksData} setStocksData={setStocksData} />
+						<TablePortfolio stocksData={stocksData} setStocksData={setStocksData} />
+						<CustomPieChart stocksData={stocksData} setStocksData={setStocksData} />
+					</Stack>
 				</Stack>
 			</Box>
 		</>
 	);
 }
 
-export default Dashboard;
+export default Profile;
