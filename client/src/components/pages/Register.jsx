@@ -8,11 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 
-// const REGISTER_URL = '/register';
+const REGISTER_URL = '/api/signup';
 
 function Register({ login, user }) {
 	// console.log(user);
-	const API_URL = '';
+	// const API_URL = '';
 	const navigate = useNavigate();
 
 	const [userData, setUserData] = useState({
@@ -28,17 +28,15 @@ function Register({ login, user }) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			// const response = await axios.post(REGISTER_URL, JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }), {
-			// 	headers: { 'Content-Type': 'application/json' },
-			// 	withCredentials: true,
-			// });
-			// if (response.data) {
-			// 	setSuccess(true);
-			// 	console.log(response.data);
-			// 	localStorage.setItem('user', JSON.stringify(response.data));
-			// }
-			login(userData);
-			setSuccess(true);
+			const response = await axios.post(REGISTER_URL, JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }), {
+				headers: { 'Content-Type': 'application/json' },
+				withCredentials: true,
+			});
+			if (response.data) {
+				setSuccess(true);
+				login(response.data);
+				// localStorage.setItem('user', JSON.stringify(response.data));
+			}
 		} catch (error) {
 			toast.error('Registration Failed');
 		}
