@@ -6,12 +6,9 @@ holdingsService.getHoldings = async (id) => {
     const query = ('SELECT holdings.stock_quantity, stocks.ticker, stocks.company_name, stocks.closing_price, stocks.last_updated FROM "holdings" LEFT JOIN "stocks" ON "holdings"."stock_id"="stocks"."stock_id" WHERE "holder_id"=$1');
     const params = [id];
 
-    const holdings = await db.query(query, params);
+    let holdings = await db.query(query, params);
+    holdings = holdings.rows
 
-    return holdings.rows;
-}
-
-holdingsService.marketValueCalcs = async (holdings) => {
     //calculate market value fo each holding and keep running total of total market value of holdings
     let totalMarketVal = 0;
     for (let i = 0; i < holdings.length; i++){

@@ -23,7 +23,7 @@ router.post('/login', userController.login, (req, res) => {
 // My portfolio
 // get users stocks/qty (DB)
 router.get('/getHoldings/:id', holdingsController.getHoldings, (req, res) => {
-    res.status(200).send(res.locals.expandedHoldings);
+    res.status(200).send(res.locals.holdings);
   })
   
   
