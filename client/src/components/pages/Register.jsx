@@ -26,13 +26,15 @@ function Register({ login, user }) {
 	const [success, setSuccess] = useState(false);
 
 	const handleSubmit = async (event) => {
+		console.log(userData);
 		event.preventDefault();
 		try {
-			const response = await axios.post(REGISTER_URL, JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }), {
+			const response = await axios.post(REGISTER_URL, JSON.stringify({ userData }), {
 				headers: { 'Content-Type': 'application/json' },
 				withCredentials: true,
 			});
 			if (response.data) {
+				console.log(response.data);
 				setSuccess(true);
 				login(response.data);
 				// localStorage.setItem('user', JSON.stringify(response.data));
