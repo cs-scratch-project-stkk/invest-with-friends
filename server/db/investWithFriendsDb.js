@@ -1,5 +1,7 @@
+const config = require('../utils/config');
 const { Pool } = require('pg');
-const { PG_URI } = require('../utils/config');
+
+const PG_URI = config.PG_URI;
 
 const pool = new Pool({
   connectionString: PG_URI,
@@ -7,7 +9,7 @@ const pool = new Pool({
 
 module.exports = {
   query: (text, params, callback) => {
-    console.log('executed query', text);
+    // console.log('executed query', text);
     return pool.query(text, params, callback);
   },
 };
