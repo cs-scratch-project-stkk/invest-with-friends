@@ -10,7 +10,6 @@ const relationshipsController = require('../controllers/relationshipsController'
 
 router.post('/signup', userController.signup, (req, res) => {
   return res.status(200).json(res.locals.createdUser);
-  return res.status(200).json(res.locals.createdUser);
 });
 
 router.post('/login', userController.login, (req, res) => {
@@ -46,24 +45,15 @@ router.delete('/updateHolding', holdingsController.updateHolding, (req, res) => 
     const code = success ? 200 : 400;
     return res.sendStatus(code);
 })
-router.post('/addHolding', holdingsController.addHolding, (req, res) => {
-    const success = res.locals.addHoldingSuccess;
-    const code = success ? 200 : 400;
-    return res.sendStatus(code);
-  })
 
-router.patch('/updateHolding', holdingsController.updateHolding, (req, res) => {
-    const success = res.locals.updateHoldingSuccess;
-    const code = success ? 200 : 400;
-    return res.sendStatus(code);
-})
 
-router.delete('/updateHolding', holdingsController.updateHolding, (req, res) => {
-    const success = res.locals.deleteHoldingSuccess;
-    const code = success ? 200 : 400;
-    return res.sendStatus(code);
-})
+
 // get current closing price for all ticker symbols (API)
+router.patch('/closingPrice', updateStocksController.getTickers, updateStocksController.getClosingPrice, (req, res) => {
+  const success = res.locals.updateClosingPriceSuccess;
+  const code = success ? 200 : 400;
+  return res.sendStatus(code);
+})
 
 // Add Friend
 // post new friend (DB)
@@ -72,19 +62,13 @@ router.post('/addRelationship', relationshipsController.addRelationship, (req, r
   const code = success ? 200 : 400;
   return res.sendStatus(code);
 })
-router.post('/addRelationship', relationshipsController.addRelationship, (req, res) => {
-  const success = res.locals.addRelationshipSuccess;
-  const code = success ? 200 : 400;
-  return res.sendStatus(code);
-})
+
 // View friends
 // get friends (DB)
 router.get('/relationships/:id', relationshipsController.getRelationships, (req, res) => {
   return res.status(200).send(res.locals.relationships);
 })
-router.get('/relationships/:id', relationshipsController.getRelationships, (req, res) => {
-  return res.status(200).send(res.locals.relationships);
-})
+
 // Share post
 
 // Newsfeed
