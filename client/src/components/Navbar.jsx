@@ -6,7 +6,7 @@ import { Box, Typography, styled, Drawer, List, ListItem, ListItemButton, ListIt
 import MenuIcon from '@mui/icons-material/Menu';
 import { Container } from '@mui/system';
 import CustomButton from './CustomButton';
-import Slide from '@mui/material/Slide';
+import SearchIcon from '@mui/icons-material/Search';
 
 function Navbar({ user, logout }) {
 	const [mobileMenu, setMobileMenu] = useState({
@@ -122,7 +122,7 @@ function Navbar({ user, logout }) {
 							justifyContent: 'center',
 							gap: '1.5rem',
 						}}>
-						{localStorage.getItem('user') ? (
+						{user.email.length > 0 ? (
 							<>
 								<Link to="/" style={{ textDecoration: 'none' }}>
 									<NavLink onClick={logout} variant="body2">
