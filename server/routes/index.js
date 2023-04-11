@@ -27,19 +27,21 @@ router.get('/holdings/:id', holdingsController.getHoldings, (req, res) => {
   })
   
   
-// post/patch/delete updated qtys (DB)
+// post updated qtys (DB)
 router.post('/addHolding', holdingsController.addHolding, (req, res) => {
     const success = res.locals.addHoldingSuccess;
     const code = success ? 200 : 400;
     return res.sendStatus(code);
   })
 
+  // patch updated qtys (DB)
 router.patch('/updateHolding', holdingsController.updateHolding, (req, res) => {
     const success = res.locals.updateHoldingSuccess;
     const code = success ? 200 : 400;
     return res.sendStatus(code);
 })
 
+// delete updated qtys (DB)
 router.delete('/updateHolding', holdingsController.updateHolding, (req, res) => {
     const success = res.locals.deleteHoldingSuccess;
     const code = success ? 200 : 400;

@@ -1,6 +1,7 @@
 const db = require('../db/investWithFriendsDb');
-const API_KEY = require('../utils/config')
+const { API_KEY } = require('../utils/config')
 var request = require('request');
+const axios = require('axios');
 
 const updateStocksService = {};
 
@@ -15,25 +16,20 @@ updateStocksService.getTickers = async () => {
     return tickersArr;
 }
 
-updateStocksService.getClosingPrice = async (ticker) => {
-    var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`;
-    let result = await request.get({
-        url: url,
-        json: true,
-        headers: {'User-Agent': 'request'}
-    }, (err, res, data) => {
-        if (err) {
-        console.log('Error:', err);
-        } else if (res.statusCode !== 200) {
-        console.log('Status:', res.statusCode);
-        } else {
-        // data is successfully parsed as a JSON object:
-        const lastDate = Object.keys(data['Time Series (Daily)'])[0];
-        closingPrice = Number(data['Time Series (Daily)'][lastDate]['4. close']);
-        return closingPrice;
-        }
+updateStocksService.getClosingPriceAxios = async (ticker) => {
+    const response = await axios.get('https://www.alphavantage.co/query', {
+        params: {
+            function: 'TIME_SERIES_DAILY_ADJUSTED',
+            symbol: ticker,
+            apikey: API_KEY,
+        },
+        headers: {
+            'User-Agent': 'request'
+        },
     });
-    return;
+    const lastDate = Object.keys(response.data['Time Series (Daily)'])[0];
+    const closingPrice = Number(response.data['Time Series (Daily)'][lastDate]['4. close']);
+    return closingPrice;
 }
 
 updateStocksService.updateClosingPrices = async (ticker, closingPrice) => {
