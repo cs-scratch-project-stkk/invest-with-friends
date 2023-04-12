@@ -43,7 +43,7 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 			toast.error('The ticker does not exist.');
 		}
 	};
-
+  
 	return (
 		<>
 			<Box bgcolor="#FAFAFA" p={2}>

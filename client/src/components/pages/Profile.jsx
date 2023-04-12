@@ -14,6 +14,9 @@ const STOCK_URL = '/stockData';
 
 function Profile({ user, setUser }) {
 	const Search = styled('div')(({ theme }) => ({
+function Profile({ user, setUser }) {
+
+	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
 		padding: '0 10px',
 		borderRadius: theme.shape.borderRadius,
