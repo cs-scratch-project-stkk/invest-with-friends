@@ -8,6 +8,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
+
 function SideNavbar() {
 	const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ function SideNavbar() {
 			text: 'Friends',
 			path: '/friends',
 			icon: <PeopleIcon />,
+
 		},
 	];
 
