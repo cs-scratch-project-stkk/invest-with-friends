@@ -10,9 +10,9 @@ import StockForm from '../StockForm';
 import CustomPieChart from '../CustomPieChart';
 import toast, { Toaster } from 'react-hot-toast';
 
-const STOCK_URL = '/stockData';
-
 function Profile({ user, setUser }) {
+	const HOLDINGS_URL = `/holdings/${user.id}`;
+
 	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
 		padding: '0 10px',
@@ -30,7 +30,7 @@ function Profile({ user, setUser }) {
 	useEffect(() => {
 		const getAllStocks = async (setStocksData) => {
 			try {
-				const response = await axios.get(STOCK_URL, JSON.stringify({ stockData }), {
+				const response = await axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
 					headers: { 'Content-Type': 'application/json' },
 					withCredentials: true,
 				});
@@ -44,15 +44,25 @@ function Profile({ user, setUser }) {
 		getAllStocks();
 	}, []);
 
-	// const login = (userData) => {
-	// 	// console.log(userData);
-	// 	setUser({ id: userData.id, firstName: userData.firstName, lastName: userData.lastName, email: userData.email, password: userData.password });
-	// 	localStorage.setItem('user', JSON.stringify(userData));
-	// 	console.log('logged in confirmed');
-	// };
+	useEffect(() => {
+		const getAllStocks = async (setStocksData) => {
+			try {
+				const response = await axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
+					headers: { 'Content-Type': 'application/json' },
+					withCredentials: true,
+				});
+				if (response.data) {
+					setStocksData(response.data);
+				}
+			} catch (error) {
+				toast.error('Server did not retrieve data appropriately.');
+			}
+		};
+		getAllStocks();
+	}, [stocksData]);
+
 	return (
 		<>
-			<CssBaseline />
 			<CssBaseline />
 			<Box sx={{ display: 'flex', mt: '40px' }}>
 				<Container sx={{ width: '20%', ml: '110px' }}>

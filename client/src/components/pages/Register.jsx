@@ -23,6 +23,7 @@ function Register({ login, user }) {
 	const { firstName, lastName, email, password } = userData;
 
 	const handleSubmit = async (event) => {
+		console.log(userData);
 		event.preventDefault();
 		try {
 			const response = await axios.post(REGISTER_URL, JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }), {
@@ -61,7 +62,7 @@ function Register({ login, user }) {
 							<TextField required fullWidth id="lastName" name="lastName" label="Last Name" value={lastName} onChange={(e) => setUserData({ ...userData, lastName: e.target.value })} />
 						</Grid>
 						<Grid item xs={12}>
-							<TextField ref={userRef} required fullWidth id="email" name="email" label="Email Address" value={email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
+							<TextField required fullWidth id="email" name="email" label="Email Address" value={email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
 						</Grid>
 						<Grid item xs={12}>
 							<TextField required fullWidth id="password" name="password" type="password" label="Password" value={password} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
