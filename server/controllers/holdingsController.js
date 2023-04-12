@@ -38,7 +38,7 @@ holdingsController.updateHolding = async (req, res, next) => {
 holdingsController.deleteHolding = async (req, res, next) => {
     try {
         const {user_id, ticker}  = req.body;
-        res.locals.deleteHoldingSuccess = await holdingsService.updateHolding(user_id, ticker);
+        res.locals.deleteHoldingSuccess = await holdingsService.deleteHolding(user_id, ticker);
         return next();
     } catch(err) {
         return next(err)

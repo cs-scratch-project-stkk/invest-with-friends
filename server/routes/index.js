@@ -42,7 +42,7 @@ router.patch('/updateHolding', holdingsController.updateHolding, (req, res) => {
 })
 
 // delete updated qtys (DB)
-router.delete('/updateHolding', holdingsController.updateHolding, (req, res) => {
+router.delete('/deleteHolding', holdingsController.updateHolding, (req, res) => {
     const success = res.locals.deleteHoldingSuccess;
     const code = success ? 200 : 400;
     return res.sendStatus(code);
