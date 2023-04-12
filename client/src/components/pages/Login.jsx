@@ -27,6 +27,8 @@ const Login = ({ login }) => {
 	const { email, password } = userData;
 	const navigate = useNavigate();
 
+	const [success, setSuccess] = useState(false);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
@@ -35,17 +37,16 @@ const Login = ({ login }) => {
 				withCredentials: true,
 			});
 			if (response.data) {
+				setSuccess(true);
 				login(response.data);
 			}
-			// console.log(JSON.stringify(response?.data));
-			// login(userData);
 		} catch (err) {
 			toast.error('Incorrect login');
 		}
 	};
 
 	useEffect(() => {
-		if (localStorage.getItem('user')) {
+		if (success) {
 			navigate('/dashboard');
 		}
 	});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -13,6 +13,7 @@ import Login from './components/pages/Login';
 import Dashboard from './components/pages/Dashboard';
 import SideNavbar from './components/SideNavbar';
 import Profile from './components/pages/Profile';
+import Friends from './components/pages/Friends';
 
 function App() {
 	const [user, setUser] = useState({
@@ -24,6 +25,7 @@ function App() {
 	});
 
 	const login = (userData) => {
+		// console.log(userData);
 		setUser({ id: userData.id, firstName: userData.firstName, lastName: userData.lastName, email: userData.email, password: userData.password });
 		localStorage.setItem('user', JSON.stringify(userData));
 		console.log('logged in confirmed');
@@ -31,16 +33,14 @@ function App() {
 
 	const logout = () => {
 		setUser({ id: '', firstName: '', lastName: '', email: '', password: '' });
-		localStorage.removeItem('user');
+		localStorage.clear();
 		console.log('logged out confirmed');
 	};
-
-	// console.log(user);
 
 	return (
 		<>
 			<Router>
-				<Navbar user={user} logout={logout} />
+				<Navbar user={user} setUser={setUser} logout={logout} />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/home" element={<Home />} />
@@ -48,8 +48,9 @@ function App() {
 					<Route path="/contactus" element={<Contact />} />
 					<Route path="/register" element={<Register user={user} login={login} />} />
 					<Route path="/login" element={<Login login={login} />} />
-					<Route path="/dashboard" element={<Dashboard user={user} />} />
-					<Route path="/profile" element={<Profile user={user} />} />
+					<Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />
+					<Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
+					<Route path="/friends" element={<Friends user={user} setUser={setUser} />} />
 				</Routes>
 			</Router>
 			<Toaster />

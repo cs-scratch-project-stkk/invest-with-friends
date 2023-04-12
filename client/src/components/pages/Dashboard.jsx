@@ -6,7 +6,7 @@ import NewsFeed from '../NewsFeed';
 import Rightbar from '../Rightbar';
 import SearchIcon from '@mui/icons-material/Search';
 
-function Dashboard({ user }) {
+function Dashboard({ user, setUser }) {
 	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
 		padding: '0 10px',
@@ -15,23 +15,20 @@ function Dashboard({ user }) {
 	}));
 
 	useEffect(() => {
-		localStorage.getItem('user');
-	});
+		setUser(JSON.parse(localStorage.getItem('user')));
+	}, []);
 
 	return (
 		<>
 			<CssBaseline />
-			<Box>
-				<Typography sx={{ textAlign: 'left', paddingTop: '30px' }}>Hello {user.firstName} </Typography>
-				<Search sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px' }}>
-					<InputBase placeholder="Search friend..." />
-					<SearchIcon sx={{ color: 'gray', width: '10%' }} />
-				</Search>
-
-				<Stack direction="row" spacing={1} mt={2} justifyContent="space-between">
+			<Box sx={{ display: 'flex', mt: '40px' }}>
+				<Container sx={{ width: '20%', ml: '110px' }}>
 					<SideNavbar />
+				</Container>
+				<Container sx={{ display: 'flex', flexDirection: 'column', gap: '10px', paddingBottom: '10px' }}>
+					<Typography sx={{ fontSize: '24px' }}>Hello {user.firstName}! </Typography>
 					<NewsFeed />
-				</Stack>
+				</Container>
 			</Box>
 		</>
 	);
