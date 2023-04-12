@@ -37,8 +37,6 @@ function App() {
 		console.log('logged out confirmed');
 	};
 
-	// console.log(user);
-
 	return (
 		<>
 			<Router>
