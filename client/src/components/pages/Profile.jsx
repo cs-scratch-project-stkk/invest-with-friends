@@ -13,8 +13,6 @@ import toast, { Toaster } from 'react-hot-toast';
 const STOCK_URL = '/stockData';
 
 function Profile({ user, setUser }) {
-	const Search = styled('div')(({ theme }) => ({
-function Profile({ user, setUser }) {
 
 	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
