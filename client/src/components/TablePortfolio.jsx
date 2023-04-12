@@ -9,12 +9,12 @@ import { PureComponent } from 'react';
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 import CustomPieChart from './CustomPieChart';
 
-function TablePortfolio({ stocksData, setStocksData }) {
-	let ticker = '';
-	const stock = stocksData.map((stock) => {
-		ticker = stock.ticker;
-		return ticker;
-	});
+function TablePortfolio({ stocksData, setStocksData, user, setUser }) {
+	// let ticker = '';
+	// const stock = stocksData.map((stock) => {
+	// 	ticker = stock.ticker;
+	// 	return ticker;
+	// });
 
 	return (
 		<>

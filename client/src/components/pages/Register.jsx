@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, styled, Typography, Avatar, Button, CssBaseline, TextField, Grid } from '@mui/material';
 import { Container } from '@mui/system';
@@ -11,9 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const REGISTER_URL = '/api/signup';
 
 function Register({ login, user }) {
-	// console.log(user);
-	// const API_URL = '';
 	const navigate = useNavigate();
+	const [success, setSuccess] = useState(false);
 
 	const [userData, setUserData] = useState({
 		firstName: '',
@@ -23,32 +22,22 @@ function Register({ login, user }) {
 	});
 	const { firstName, lastName, email, password } = userData;
 
-	const [success, setSuccess] = useState(false);
-
 	const handleSubmit = async (event) => {
 		console.log(userData);
 		event.preventDefault();
 		try {
-			const response = await axios.post(REGISTER_URL, JSON.stringify({ userData }), {
+			const response = await axios.post(REGISTER_URL, JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password }), {
 				headers: { 'Content-Type': 'application/json' },
 				withCredentials: true,
 			});
 			if (response.data) {
-				console.log(response.data);
 				setSuccess(true);
 				login(response.data);
-				// localStorage.setItem('user', JSON.stringify(response.data));
 			}
 		} catch (error) {
 			toast.error('Registration Failed');
 		}
 	};
-
-	useEffect(() => {
-		if (localStorage.getItem('user') || success) {
-			navigate('/dashboard');
-		}
-	});
 
 	return (
 		<Container maxWidth="xs">
@@ -73,7 +62,7 @@ function Register({ login, user }) {
 							<TextField required fullWidth id="lastName" name="lastName" label="Last Name" value={lastName} onChange={(e) => setUserData({ ...userData, lastName: e.target.value })} />
 						</Grid>
 						<Grid item xs={12}>
-							<TextField required fullWidth id="email" name="email" label="Email Address" value={email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
+							<TextField ref={userRef} required fullWidth id="email" name="email" label="Email Address" value={email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
 						</Grid>
 						<Grid item xs={12}>
 							<TextField required fullWidth id="password" name="password" type="password" label="Password" value={password} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />

@@ -8,10 +8,12 @@ import axios from '../../api/axios';
 import SearchIcon from '@mui/icons-material/Search';
 import StockForm from '../StockForm';
 import CustomPieChart from '../CustomPieChart';
+import toast, { Toaster } from 'react-hot-toast';
 
 const STOCK_URL = '/stockData';
 
-function Profile({ user }) {
+function Profile({ user, setUser }) {
+
 	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
 		padding: '0 10px',
@@ -20,25 +22,53 @@ function Profile({ user }) {
 	}));
 
 	const [stocksData, setStocksData] = useState([]);
+	// console.log(stocksData);
 
+	useEffect(() => {
+		setUser(JSON.parse(localStorage.getItem('user')));
+	}, []);
+
+	useEffect(() => {
+		const getAllStocks = async (setStocksData) => {
+			try {
+				const response = await axios.get(STOCK_URL, JSON.stringify({ stockData }), {
+					headers: { 'Content-Type': 'application/json' },
+					withCredentials: true,
+				});
+				if (response.data) {
+					setStocksData(response.data);
+				}
+			} catch (error) {
+				toast.error('Server did not retrieve data appropriately.');
+			}
+		};
+		getAllStocks();
+	}, []);
+
+	// const login = (userData) => {
+	// 	// console.log(userData);
+	// 	setUser({ id: userData.id, firstName: userData.firstName, lastName: userData.lastName, email: userData.email, password: userData.password });
+	// 	localStorage.setItem('user', JSON.stringify(userData));
+	// 	console.log('logged in confirmed');
+	// };
 	return (
 		<>
 			<CssBaseline />
-			<Box>
-				<Typography sx={{ textAlign: 'left', paddingTop: '30px' }}>Hello {user.firstName} </Typography>
-				<Search sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px' }}>
-					<InputBase placeholder="Search friend..." />
-					<SearchIcon sx={{ color: 'gray', width: '10%' }} />
-				</Search>
-
-				<Stack direction="row" spacing={1} mt={2}>
+			<CssBaseline />
+			<Box sx={{ display: 'flex', mt: '40px' }}>
+				<Container sx={{ width: '20%', ml: '110px' }}>
 					<SideNavbar />
-					<Stack direction="column">
-						<StockForm stocksData={stocksData} setStocksData={setStocksData} />
-						<TablePortfolio stocksData={stocksData} setStocksData={setStocksData} />
-						<CustomPieChart stocksData={stocksData} setStocksData={setStocksData} />
+				</Container>
+				<Container sx={{ display: 'flex', flexDirection: 'column', gap: '10px', paddingBottom: '10px' }}>
+					<Typography sx={{ fontSize: '24px' }}>Hello {user.firstName}! </Typography>
+					<Stack direction="row">
+						<Stack direction="column">
+							<StockForm stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />
+							<TablePortfolio stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />
+							<CustomPieChart stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />
+						</Stack>
 					</Stack>
-				</Stack>
+				</Container>
 			</Box>
 		</>
 	);
