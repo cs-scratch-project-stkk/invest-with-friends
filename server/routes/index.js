@@ -16,53 +16,37 @@ router.post('/login', userController.login, (req, res) => {
   return res.status(200).json(res.locals.existingUser);
 })
 
-router.post('/login', userController.login, (req, res) => {
-  return res.status(200).json(res.locals.existingUser);
-})
-
 // My portfolio
 // get users stocks/qty (DB)
 router.get('/getHoldings/:id', holdingsController.getHoldings, (req, res) => {
-    res.status(200).send(res.locals.holdings);
+    return res.status(200).send(res.locals.holdings);
   })
   
   
 // post updated qtys (DB)
 router.post('/addHolding', holdingsController.addHolding, (req, res) => {
-    const success = res.locals.addHoldingSuccess;
-    const code = success ? 200 : 400;
-    return res.sendStatus(code);
+  return res.status(200).send(res.locals.holdings);
   })
 
   // patch updated qtys (DB)
 router.patch('/updateHolding', holdingsController.updateHolding, (req, res) => {
-    const success = res.locals.updateHoldingSuccess;
-    const code = success ? 200 : 400;
-    return res.sendStatus(code);
+  return res.status(200).send(res.locals.holdings);
 })
 
 // delete updated qtys (DB)
-router.delete('/updateHolding', holdingsController.updateHolding, (req, res) => {
-    const success = res.locals.deleteHoldingSuccess;
-    const code = success ? 200 : 400;
-    return res.sendStatus(code);
+router.delete('/deleteHolding', holdingsController.deleteHolding, (req, res) => {
+  return res.status(200).send(res.locals.holdings);
 })
 
-
-
 // get current closing price for all ticker symbols (API)
-router.patch('/closingPrice', updateStocksController.getTickers, updateStocksController.getClosingPrice, (req, res) => {
-  const success = res.locals.updateClosingPriceSuccess;
-  const code = success ? 200 : 400;
-  return res.sendStatus(code);
+router.patch('/closingPrice/:id', updateStocksController.getTickers, updateStocksController.getClosingPrice, (req, res) => {
+  return res.status(200).send(res.locals.holdings);
 })
 
 // Add Friend
 // post new friend (DB)
 router.post('/addRelationship', relationshipsController.addRelationship, (req, res) => {
-  const success = res.locals.addRelationshipSuccess;
-  const code = success ? 200 : 400;
-  return res.sendStatus(code);
+  return res.status(200).send(res.locals.holdings);
 })
 
 // View friends
