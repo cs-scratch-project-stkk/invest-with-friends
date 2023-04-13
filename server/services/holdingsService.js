@@ -27,9 +27,9 @@ holdingsService.getHoldings = async (id) => {
     return holdings;
 }
 
-holdingsService.addHolding = async (user_id, stock_id, ticker, shares) => {
+holdingsService.addHoldingExisting = async (user_id, stock_id, ticker, shares) => {
 
-    let query = (`
+    const query = (`
         INSERT INTO holdings (holder_id, stock_id, stock_quantity) 
         SELECT $1, $2, $3 
         WHERE EXISTS (
@@ -37,16 +37,19 @@ holdingsService.addHolding = async (user_id, stock_id, ticker, shares) => {
             WHERE stocks.stock_id = $2
         );
     `);
-    let params = [user_id, stock_id, shares];
-    let response = await db.query(query, params);
+    const params = [user_id, stock_id, shares];
+    const response = await db.query(query, params);
     
-    if (response.rowCount === 1) {return true;} 
+    return response.rowCount === 1;
+}
+
+holdingsService.addHoldingNew = async (user_id, ticker, shares) => {
 
     const companyName = await getCompanyName(ticker);
     const closingPrice = await getClosingPriceAxios(ticker);
     const lastUpdated = Math.floor(Date.now()/1000);
 
-    query = (`
+    const query = (`
         WITH first_insert AS (
             INSERT INTO stocks (ticker, company_name, closing_price, last_updated)
             VALUES ($1, $2, $3, $4)
@@ -55,8 +58,8 @@ holdingsService.addHolding = async (user_id, stock_id, ticker, shares) => {
         INSERT INTO holdings (holder_id, stock_id, stock_quantity)
         VALUES ($5, (SELECT stock_id FROM first_insert), $6);
     `);
-    params = [ticker, companyName, closingPrice, lastUpdated, user_id, shares]
-    response = await db.query(query, params);
+    const params = [ticker, companyName, closingPrice, lastUpdated, user_id, shares]
+    const response = await db.query(query, params);
 
     return response.rowCount === 1;
 }
