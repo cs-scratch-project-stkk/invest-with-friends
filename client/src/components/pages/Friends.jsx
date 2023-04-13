@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import { Box, styled, Typography, Stack, CssBaseline, InputBase, TextField, Button, Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import SideNavbar from '../SideNavbar';
@@ -16,26 +18,23 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-const FRIENDS_URL = '/api/friends';
-
 function Friends({ user, setUser }) {
+	const ADDFRIENDS_URL = '/api/addRelationship';
+	const GETFRIENDS_URL = `/api//relationships/${user.id}`;
+
 	const [friends, setFriends] = useState([]);
 	const [friend, setFriend] = useState({
+		id: '',
 		firstName: '',
 		lastName: '',
+		friendPortfolio: '',
+		text: 'View',
 	});
-
-	// const Search = styled('div')(({ theme }) => ({
-	// 	backgroundColor: '#F2F2F2',
-	// 	padding: '0 10px',
-	// 	borderRadius: theme.shape.borderRadius,
-	// 	width: '20%',
-	// }));
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(FRIENDS_URL, JSON.stringify({ firstName: friend.firstName, lastName: friend.lastName }), {
+			const response = await axios.post(ADDFRIENDS_URL, JSON.stringify({ firstName: friend.firstName, lastName: friend.lastName }), {
 				headers: { 'Content-Type': 'application/json' },
 				withCredentials: true,
 			});
@@ -53,7 +52,7 @@ function Friends({ user, setUser }) {
 	useEffect(() => {
 		const getAllFriends = async (friends) => {
 			try {
-				const response = await axios.get(FRIENDS_URL, JSON.stringify({ friends }), {
+				const response = await axios.get(GETFRIENDS_URL, JSON.stringify({ friends }), {
 					headers: { 'Content-Type': 'application/json' },
 					withCredentials: true,
 				});
@@ -107,18 +106,26 @@ function Friends({ user, setUser }) {
 						</Button>
 					</Box>
 
-					<Table size="small">
+					<Link to="/friend_portfolio" target="_blank">
+						<div>click me</div>
+					</Link>
+
+					<Table size="small" sx={{ width: '55%', mt: '25px' }}>
 						<TableHead>
 							<TableRow>
 								<TableCell>First Name</TableCell>
 								<TableCell>Last Name</TableCell>
+								<TableCell>Portfolio</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{friends.map((friend, index) => (
 								<TableRow key={index}>
-									<TableCell>{friends.firstName}</TableCell>
-									<TableCell>{friends.lastName}</TableCell>
+									<TableCell>{friend.firstName}</TableCell>
+									<TableCell>{friend.lastName}</TableCell>
+									<Link to="/friend_portfolio" target="_blank">
+										<TableCell>View</TableCell>
+									</Link>
 								</TableRow>
 							))}
 						</TableBody>

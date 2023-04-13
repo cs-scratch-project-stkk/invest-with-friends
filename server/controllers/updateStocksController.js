@@ -1,4 +1,5 @@
 const updateStocksService = require('../services/updateStocksService')
+const holdingsService = require('../services/holdingsService')
 
 const updateStocksController = {};
 
@@ -20,6 +21,8 @@ updateStocksController.getClosingPrice = async (req, res, next) => {
             result = await updateStocksService.updateClosingPrices(res.locals.tickers[i], closingPrice)
             // if (!result) res.locals.updateClosingPriceSuccess = false;
         }
+        const user_id  = req.params.id;
+        res.locals.holdings = await holdingsService.getHoldings(user_id);
         next();
     } catch(err) {
         return next(err)

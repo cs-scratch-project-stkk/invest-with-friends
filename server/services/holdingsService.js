@@ -47,23 +47,17 @@ holdingsService.addHolding = async (user_id, ticker, shares) => {
     return holdings.rows;
 }
 
-holdingsService.updateHoldings = async (user_id, ticker, shares) => {
-  
-    const query = ('UPDATE h SET h.stock_quantity = $3 FROM "holdings" h LEFT JOIN "stocks" s ON h."stock_id"=s."stock_id" WHERE "ticker"=$2 AND "holder_id"=$1');
-
+holdingsService.updateHolding = async (user_id, ticker, shares) => {
+    const query = ('UPDATE holdings AS h SET stock_quantity = $3 FROM stocks AS s WHERE h.stock_id = s.stock_id AND s.ticker = $2 AND h.holder_id = $1;');
     const params = [user_id, ticker, shares];
-
     const holdings = await db.query(query, params);
 
     return holdings.rowCount === 1;
 }
 
-holdingsService.deleteHoldings = async (user_id, ticker) => {
-  
-    const query = ('UPDATE h SET h.stock_quantity = $3 FROM "holdings" h LEFT JOIN "stocks" s ON h."stock_id"=s."stock_id" WHERE "ticker"=$2 AND "holder_id"=$1');
-
+holdingsService.deleteHolding = async (user_id, ticker) => {
+    const query = ('DELETE FROM holdings AS h USING stocks AS s WHERE h.stock_id = s.stock_id AND s.ticker = $2 AND h.holder_id = $1;');
     const params = [user_id, ticker];
-
     const holdings = await db.query(query, params);
 
     return holdings.rowCount === 1;
