@@ -14,11 +14,8 @@ holdingsController.getHoldings = async (req, res, next) => {
 
 holdingsController.addHolding = async (req, res, next) => {
     try {
-        const {user_id, ticker, shares}  = req.body;
-        res.locals.addHoldingSuccess = await holdingsService.addHolding(user_id, ticker, shares);
-        // if (res.locals.addHoldingSuccess) {
-        //     res.locals.newStock = false;
-        // }
+        const {user_id, stock_id, ticker, shares}  = req.body;
+        res.locals.addHoldingSuccess = await holdingsService.addHolding(user_id, stock_id, ticker, shares);
         res.locals.holdings = await holdingsService.getHoldings(user_id);
         return next();
     } catch(err) {
