@@ -3,7 +3,7 @@ const db = require('../db/investWithFriendsDb');
 const holdingsService = {};
 
 holdingsService.getHoldings = async (id) => {
-    const query = ('SELECT holdings.stock_quantity, stocks.ticker, stocks.company_name, stocks.closing_price, stocks.last_updated FROM "holdings" LEFT JOIN "stocks" ON "holdings"."stock_id"="stocks"."stock_id" WHERE "holder_id"=$1');
+    const query = ('SELECT holdings.stock_quantity, stocks.stock_id, stocks.ticker, stocks.company_name, stocks.closing_price, stocks.last_updated FROM "holdings" LEFT JOIN "stocks" ON "holdings"."stock_id"="stocks"."stock_id" WHERE "holder_id"=$1');
     const params = [id];
 
     let holdings = await db.query(query, params);
@@ -48,7 +48,7 @@ holdingsService.addHolding = async (user_id, ticker, shares) => {
 }
 
 holdingsService.updateHolding = async (user_id, ticker, shares) => {
-    const query = ('UPDATE holdings AS h SET stock_quantity = $3 FROM stocks AS s WHERE h.stock_id = s.stock_id AND s.ticker = $2 AND h.holder_id = $1;');
+    const query = ('UPDATE holdings AS h SET stock_quantity = stock_quantity + $3 FROM stocks AS s WHERE h.stock_id = s.stock_id AND s.ticker = $2 AND h.holder_id = $1');
     const params = [user_id, ticker, shares];
     const holdings = await db.query(query, params);
 
@@ -63,4 +63,12 @@ holdingsService.deleteHolding = async (user_id, ticker) => {
     return holdings.rowCount === 1;
 }
 
+holdingsService.deleteSomeHoldingInfo = async (holdings) => {
+    for (let i = 0; i < holdings.length; i++){
+        delete holdings[i].stock_quantity;
+        delete holdings[i].last_updated;
+        delete holdings[i].market_value;
+    }
+    return holdings;
+}
 module.exports = holdingsService;
