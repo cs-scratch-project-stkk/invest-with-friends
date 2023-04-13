@@ -10,10 +10,11 @@ userService.userExists = async (email) => {
 };
 
 userService.createUser = async (firstName, lastName, email, password) => {
-  const query = (
-    'INSERT INTO users (first_name, last_name, email, password) '
-    + 'VALUES ($1, $2, $3, $4) RETURNING user_id AS id, first_name AS "firstName", last_name AS "lastName", email'
-  );
+  const query = (`
+    INSERT INTO users (first_name, last_name, email, password)
+    VALUES ($1, $2, $3, $4) 
+    RETURNING user_id AS id, first_name AS "firstName", last_name AS "lastName", email
+  `);
   const params = [firstName, lastName, email, password];
   const data = await db.query(query, params);
 
@@ -23,9 +24,10 @@ userService.createUser = async (firstName, lastName, email, password) => {
 };
 
 userService.getExistingUser = async (email) => {
-  const query = (
-    'SELECT user_id AS id, first_name AS "firstName", last_name AS "lastName", email, password FROM users WHERE email=$1'
-  );
+  const query = (`
+    SELECT user_id AS id, first_name AS "firstName", last_name AS "lastName", email, password 
+    FROM users WHERE email=$1
+  `);
   const params = [email];
 
   const data = await db.query(query, params);
