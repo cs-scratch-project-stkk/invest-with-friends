@@ -22,7 +22,11 @@ router.get('/getHoldings/:id', holdingsController.getHoldings, (req, res) => {
     return res.status(200).send(res.locals.holdings);
   })
   
-  
+ // get friend's stocks/qty (DB)
+router.get('/getFriendHoldings/:id', holdingsController.getFriendHoldings, (req, res) => {
+  return res.status(200).send(res.locals.holdings);
+})
+
 // post updated qtys (DB)
 router.post('/addHolding', holdingsController.addHolding, (req, res) => {
   return res.status(200).send(res.locals.holdings);
