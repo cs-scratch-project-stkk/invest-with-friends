@@ -40,6 +40,12 @@ function Register({ login, user }) {
 		}
 	};
 
+	useEffect(() => {
+		if (success) {
+			navigate('/dashboard');
+		}
+	});
+
 	return (
 		<Container maxWidth="xs">
 			<CssBaseline />
