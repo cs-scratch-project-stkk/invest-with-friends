@@ -93,7 +93,6 @@ function Navbar({ user, logout }) {
 					<Box
 						sx={{
 							display: 'flex',
-							pl: '0.15rem',
 						}}>
 						<NavbarLinksBox>
 							<Link to="/home" style={{ textDecoration: 'none' }}>
