@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, styled, Typography, Stack, CssBaseline, InputBase, TextField, Button, Grid } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { Container } from '@mui/system';
 import toast, { Toaster } from 'react-hot-toast';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -8,7 +9,9 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 	const HOLDINGS_URL = `/holdings/${user.id}`;
 	const ADDHOLDING_URL = '/api/addHolding';
 	const UPDATEHOLDING_URL = '/api/updateHolding';
+	const DELETEHOLDING_URL = '/api//deleteHolding';
 	const [stockData, setStockData] = useState({
+		user: `${user.id}`,
 		ticker: '',
 		company: '',
 		closingPrice: '',
@@ -23,20 +26,8 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 			const existingStock = stocksData.find((data) => data.ticker === stockData.ticker);
 			if (existingStock) {
 				const updatedStock = { ...existingStock, shares: Number(existingStock.shares) + Number(stockData.shares) };
-				setStockData({
-					ticker: updatedStock.ticker,
-					company: updatedStock.company,
-					closingPrice: updatedStock.closingPrice,
-					shares: updatedStock.shares,
-					marketValue: updatedStock.marketValue,
-					percentHoldings: updatedStock.percentHoldings,
-				});
-				setStocksData((prev) => {
-					const portfolio = [...prev, stockData];
-					return portfolio;
-				});
-			} else {
-				const response = await axios.post(ADDHOLDING_URL, JSON.stringify({ stockData }), {
+
+				const response = await axios.patch(UPDATEHOLDING_URL, JSON.stringify({ updatedStock }), {
 					headers: { 'Content-Type': 'application/json' },
 					withCredentials: true,
 				});
@@ -49,13 +40,31 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 						marketValue: response.data.marketValue,
 						percentHoldings: response.data.percentHoldings,
 					});
-					stocksData.map((data) => {
-						if (stockData.ticker !== data.ticker) {
-							setStocksData((prev) => {
-								const portfolio = [...prev, stockData];
-								return portfolio;
-							});
-						}
+
+					setStocksData((prev) => {
+						const portfolio = [...prev, stockData];
+						return portfolio;
+					});
+				}
+			} else {
+				const response = await axios.post(ADDHOLDING_URL, JSON.stringify({ stockData }), {
+					headers: { 'Content-Type': 'application/json' },
+					withCredentials: true,
+				});
+				if (response.data) {
+					setStockData({
+						user: `${user.id}`,
+						ticker: response.data.ticker,
+						company: response.data.company,
+						closingPrice: response.data.closingPrice,
+						shares: response.data.shares,
+						marketValue: response.data.marketValue,
+						percentHoldings: response.data.percentHoldings,
+					});
+
+					setStocksData((prev) => {
+						const portfolio = [...prev, stockData];
+						return portfolio;
 					});
 				}
 			}
@@ -74,29 +83,33 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 			const existingStock = stocksData.find((data) => data.ticker === stockData.ticker);
 			if (existingStock) {
 				const updatedStock = { ...existingStock, shares: Number(existingStock.shares) - Number(stockData.shares) };
-				setStocksData({ ...stockData, shares: updatedStock.shares });
-			} else {
-				const response = await axios.post(ADDHOLDING_URL, JSON.stringify({ stockData }), {
-					headers: { 'Content-Type': 'application/json' },
-					withCredentials: true,
-				});
-				if (response.data) {
-					setStockData({
-						ticker: response.data.ticker,
-						company: response.data.company,
-						closingPrice: response.data.closingPrice,
-						shares: response.data.shares,
-						marketValue: response.data.marketValue,
-						percentHoldings: response.data.percentHoldings,
+				if (updatedStock.shares === 0) {
+					const response = await axios.delete(DELETEHOLDING_URL, JSON.stringify({ updatedStock }), {
+						headers: { 'Content-Type': 'application/json' },
+						withCredentials: true,
 					});
-					stocksData.map((data) => {
-						if (stockData.ticker !== data.ticker) {
-							setStocksData((prev) => {
-								const portfolio = [...prev, stockData];
-								return portfolio;
-							});
-						}
+				} else if (updatedStock.shares > 0) {
+					const response = await axios.patch(UPDATEHOLDING_URL, JSON.stringify({ updatedStock }), {
+						headers: { 'Content-Type': 'application/json' },
+						withCredentials: true,
 					});
+					if (response.data) {
+						setStockData({
+							ticker: response.data.ticker,
+							company: response.data.company,
+							closingPrice: response.data.closingPrice,
+							shares: response.data.shares,
+							marketValue: response.data.marketValue,
+							percentHoldings: response.data.percentHoldings,
+						});
+
+						setStocksData((prev) => {
+							const portfolio = [...prev, stockData];
+							return portfolio;
+						});
+					}
+				} else {
+					toast.error('You do not have enough shares');
 				}
 			}
 			setStockData({
@@ -124,7 +137,7 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 
 	return (
 		<>
-			<Box bgcolor="#FAFAFA" p={2}>
+			<Box p={2}>
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
 					<TextField
 						size="small"
@@ -157,18 +170,9 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 					<Button color="error" size="medium" type="submit" variant="contained" onClick={sellOnClick}>
 						SELL
 					</Button>
-					<Button
-						onClick={refresh}
-						sx={{
-							ml: '25px',
-							color: '#0F1B4C',
-							'&:hover': {
-								color: 'primary',
-							},
-						}}>
-						<RefreshIcon fontSize="small" sx={{ color: '#0F1B4C', mr: '5px' }} />
-						Refresh
-					</Button>
+					<IconButton color="primary" sx={{ ml: '10px' }} onClick={refresh}>
+						<RefreshIcon fontSize="small" sx={{ color: '#0F1B4C' }} />
+					</IconButton>
 				</Box>
 			</Box>
 		</>
@@ -413,3 +417,63 @@ export default StockForm;
 // 	);
 // }
 // export default StockForm;
+
+// const sellOnClick = async (event) => {
+// 	event.preventDefault();
+// 	try {
+// 		const existingStock = stocksData.find((data) => data.ticker === stockData.ticker);
+// 		if (existingStock) {
+// 			const updatedStock = { ...existingStock, shares: Number(existingStock.shares) - Number(stockData.shares) };
+
+// 			const response = await axios.patch(UPDATEHOLDING_URL, JSON.stringify({ updatedStock }), {
+// 				headers: { 'Content-Type': 'application/json' },
+// 				withCredentials: true,
+// 			});
+// 			if (response.data) {
+// 				setStockData({
+// 					ticker: response.data.ticker,
+// 					company: response.data.company,
+// 					closingPrice: response.data.closingPrice,
+// 					shares: response.data.shares,
+// 					marketValue: response.data.marketValue,
+// 					percentHoldings: response.data.percentHoldings,
+// 				});
+
+// 				setStocksData((prev) => {
+// 					const portfolio = [...prev, stockData];
+// 					return portfolio;
+// 				});
+// 			}
+// 		} else {
+// 			const response = await axios.post(ADDHOLDING_URL, JSON.stringify({ stockData }), {
+// 				headers: { 'Content-Type': 'application/json' },
+// 				withCredentials: true,
+// 			});
+// 			if (response.data) {
+// 				setStockData({
+// 					user: `${user.id}`,
+// 					ticker: response.data.ticker,
+// 					company: response.data.company,
+// 					closingPrice: response.data.closingPrice,
+// 					shares: response.data.shares,
+// 					marketValue: response.data.marketValue,
+// 					percentHoldings: response.data.percentHoldings,
+// 				});
+// 				stocksData.map((data) => {
+// 					if (stockData.ticker !== data.ticker) {
+// 						setStocksData((prev) => {
+// 							const portfolio = [...prev, stockData];
+// 							return portfolio;
+// 						});
+// 					}
+// 				});
+// 			}
+// 		}
+// 		setStockData({
+// 			ticker: '',
+// 			shares: '',
+// 		});
+// 	} catch (err) {
+// 		toast.error('The ticker does not exist.');
+// 	}
+// };

@@ -47,4 +47,15 @@ holdingsController.deleteHolding = async (req, res, next) => {
     }
 }
 
+holdingsController.getFriendHoldings = async (req, res, next) => {
+    try {
+        const  friend_id  = req.params.id;
+        res.locals.holdings = await holdingsService.getHoldings(friend_id);
+        res.locals.holdings = await holdingsService.deleteSomeHoldingInfo(res.locals.holdings);
+        return next();
+    } catch(err) {
+        return next(err)
+    }
+}
+
 module.exports = holdingsController;

@@ -12,7 +12,7 @@ relationshipsService.addRelationship = async (user_id, follow_id) => {
 }
 
 relationshipsService.getRelationships = async (id) => {
-    const query = ('SELECT user_id, follow_id FROM "relationships" WHERE user_id=$1');
+    const query = ('SELECT u.user_id, u.first_name, u.last_name, u.email FROM relationships r LEFT JOIN users u ON r.follow_id=u.user_id WHERE r.user_id=$1');
     const params = [id];
 
     const relationships = await db.query(query, params);
