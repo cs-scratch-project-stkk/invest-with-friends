@@ -1,12 +1,15 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Typography, styled, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 import { Container } from '@mui/system';
 import CustomButton from './CustomButton';
-import SearchIcon from '@mui/icons-material/Search';
+import Avatar from '@mui/material/Avatar';
 
 function Navbar({ user, logout }) {
 	const [mobileMenu, setMobileMenu] = useState({
@@ -86,6 +89,16 @@ function Navbar({ user, logout }) {
 		},
 	}));
 
+	const initials = () => {
+		return user.firstName.charAt(0) + user.lastName.charAt(0);
+	};
+
+	const [open, setOpen] = useState(false);
+
+	useEffect(() => {
+		setOpen(false);
+	}, []);
+
 	return (
 		<>
 			<Box sx={{ backgroundColor: '#E6F0FF' }}>
@@ -123,11 +136,38 @@ function Navbar({ user, logout }) {
 						}}>
 						{user.email.length > 0 ? (
 							<>
-								<Link to="/" style={{ textDecoration: 'none' }}>
-									<NavLink onClick={logout} variant="body2">
-										Log Out
-									</NavLink>
-								</Link>
+								<Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+									<Avatar sx={{ cursor: 'pointer' }} onClick={(e) => setOpen(true)}>
+										{initials()}
+									</Avatar>
+									<Typography onClick={(e) => setOpen(true)} sx={{ fontSize: '14px', color: '#4F5361', fontWeight: 'bold', cursor: 'pointer' }}>
+										{user.firstName}
+									</Typography>
+									<Menu
+										id="demo-positioned-menu"
+										aria-labelledby="demo-positioned-button"
+										open={open}
+										onClose={(e) => setOpen(false)}
+										anchorOrigin={{
+											vertical: 'top',
+											horizontal: 'right',
+										}}
+										transformOrigin={{
+											vertical: 'top',
+											horizontal: 'right',
+										}}>
+										<MenuItem>Profile</MenuItem>
+										<MenuItem>My account</MenuItem>
+
+										<MenuItem>
+											<Link to="/" style={{ textDecoration: 'none' }}>
+												<NavLink onClick={logout} variant="body2">
+													Log Out
+												</NavLink>
+											</Link>
+										</MenuItem>
+									</Menu>
+								</Box>
 							</>
 						) : (
 							<>
