@@ -48,4 +48,19 @@ updateStocksService.updateClosingPrices = async (ticker, closingPrice) => {
 //     return holdings.rows;
 // }
 
+updateStocksService.getCompanyName = async (ticker) => {
+    const response = await axios.get('https://www.alphavantage.co/query', {
+        params: {
+            function: 'OVERVIEW',
+            symbol: ticker,
+            apikey: API_KEY,
+        },
+        headers: {
+            'User-Agent': 'request'
+        },
+    });
+    const companyName = response.data.Name;
+    return companyName;
+}
+
 module.exports = updateStocksService;
