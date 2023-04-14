@@ -27,23 +27,30 @@ holdingsService.getHoldings = async (id) => {
     return holdings;
 }
 
-holdingsService.addHoldingExisting = async (user_id, stock_id, ticker, shares) => {
+holdingsService.addHoldingExisting = async (user_id, ticker, shares) => {
 
     const query = (`
-        INSERT INTO holdings (holder_id, stock_id, stock_quantity) 
-        SELECT $1, $2, $3 
+        INSERT INTO holdings (holder_id, stock_quantity, stock_id) 
+        SELECT $1, $3, (
+            SELECT stock_id 
+            FROM stocks
+            WHERE stocks.ticker = $2
+            )
         WHERE EXISTS (
-            SELECT * FROM stocks 
-            WHERE stocks.stock_id = $2
+            SELECT * 
+            FROM stocks 
+            WHERE stocks.ticker = $2
         );
     `);
-    const params = [user_id, stock_id, shares];
+    const params = [user_id, ticker, shares];
     const response = await db.query(query, params);
     
     return response.rowCount === 1;
 }
 
 holdingsService.addHoldingNew = async (user_id, ticker, shares) => {
+
+    console.log('hit');
 
     const companyName = await getCompanyName(ticker);
     const closingPrice = await getClosingPriceAxios(ticker);
