@@ -4,9 +4,10 @@ const relationshipsController = {};
 
 relationshipsController.addRelationship = async (req, res, next) => {
     try {
-        const {user_id, follow_id}  = req.body;        
-        res.locals.addRelationshipSuccess = await relationshipsService.addRelationship(user_id, follow_id);
-        return next();
+        const { user_id, first_name, last_name } = req.body;
+		result = await relationshipsService.addRelationship(user_id, first_name, last_name);
+		res.locals.relationships = await relationshipsService.getRelationships(user_id);
+		return next();
     } catch(err) {
         return next(err)
     }
