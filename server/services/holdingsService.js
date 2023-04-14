@@ -1,4 +1,5 @@
 const db = require('../db/investWithFriendsDb');
+const { getClosingPriceAxios, getCompanyName } = require('./updateStocksService');
 
 const holdingsService = {};
 
@@ -26,25 +27,41 @@ holdingsService.getHoldings = async (id) => {
     return holdings;
 }
 
-holdingsService.addHolding = async (user_id, ticker, shares) => {
-    //check to see if ticker exists on current database
-    const query = ('SELECT stock_id FROM stocks WHERE ticker=$1');
-    const params = [ticker];
-    const stock_id = await db.query(query, params);
+holdingsService.addHoldingExisting = async (user_id, stock_id, ticker, shares) => {
 
-    //stock exists on the database
-    if (stock_id.rows){
-        const query = ('INSERT INTO holdings (holder_id,stock_id,stock_quantity) VALUES ($1,$2,$3)');
-        const params =[user_id, stock_id.rows[0].stock_id, shares];
-        const holdings = await db.query(query, params);
-        return holdings.rowCount === 1;
-    } 
-    //stock doesn't exist on database
-    else{
-        res.locals.newStock = true;
-    }
+    const query = (`
+        INSERT INTO holdings (holder_id, stock_id, stock_quantity) 
+        SELECT $1, $2, $3 
+        WHERE EXISTS (
+            SELECT * FROM stocks 
+            WHERE stocks.stock_id = $2
+        );
+    `);
+    const params = [user_id, stock_id, shares];
+    const response = await db.query(query, params);
+    
+    return response.rowCount === 1;
+}
 
-    return holdings.rows;
+holdingsService.addHoldingNew = async (user_id, ticker, shares) => {
+
+    const companyName = await getCompanyName(ticker);
+    const closingPrice = await getClosingPriceAxios(ticker);
+    const lastUpdated = Math.floor(Date.now()/1000);
+
+    const query = (`
+        WITH first_insert AS (
+            INSERT INTO stocks (ticker, company_name, closing_price, last_updated)
+            VALUES ($1, $2, $3, $4)
+            RETURNING stock_id
+        )
+        INSERT INTO holdings (holder_id, stock_id, stock_quantity)
+        VALUES ($5, (SELECT stock_id FROM first_insert), $6);
+    `);
+    const params = [ticker, companyName, closingPrice, lastUpdated, user_id, shares]
+    const response = await db.query(query, params);
+
+    return response.rowCount === 1;
 }
 
 holdingsService.updateHolding = async (user_id, ticker, shares) => {
