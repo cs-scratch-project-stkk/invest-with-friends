@@ -14,7 +14,6 @@ import Dashboard from './components/pages/Dashboard';
 import SideNavbar from './components/SideNavbar';
 import Profile from './components/pages/Profile';
 import Friends from './components/pages/Friends';
-import FriendsPortfolio from './components/pages/FriendsPortfolio';
 
 function App() {
 	const [user, setUser] = useState({
@@ -52,7 +51,6 @@ function App() {
 					<Route path="/dashboard" element={<Dashboard user={user} setUser={setUser} />} />
 					<Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
 					<Route path="/friends" element={<Friends user={user} setUser={setUser} />} />
-					<Route path="/friend_portoflio" element={<FriendsPortfolio user={user} setUser={setUser} />} />
 				</Routes>
 			</Router>
 			<Toaster />
