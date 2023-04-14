@@ -50,7 +50,7 @@ router.patch('/closingPrice/:id', updateStocksController.getTickers, updateStock
 // Add Friend
 // post new friend (DB)
 router.post('/addRelationship', relationshipsController.addRelationship, (req, res) => {
-  return res.status(200).send(res.locals.holdings);
+  return res.status(200).send(res.locals.relationships);
 })
 
 // View friends
