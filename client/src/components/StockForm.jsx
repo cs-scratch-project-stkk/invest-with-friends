@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import { Container } from '@mui/system';
 import toast, { Toaster } from 'react-hot-toast';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import axios from '../api/axios';
 
 function StockForm({ stocksData, setStocksData, user, setUser }) {
 	const HOLDINGS_URL = `/holdings/${user.id}`;
@@ -11,7 +12,7 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 	const UPDATEHOLDING_URL = '/api/updateHolding';
 	const DELETEHOLDING_URL = '/api//deleteHolding';
 	const [stockData, setStockData] = useState({
-		user: `${user.id}`,
+		user_id: '',
 		ticker: '',
 		company: '',
 		closingPrice: '',
@@ -20,7 +21,14 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 		percentHoldings: '',
 	});
 
+	const userData = JSON.parse(localStorage.getItem('user'));
+
+	useEffect(() => {
+		setStockData({ ...stockData, user_id: userData.id });
+	}, []);
+
 	const addOnClick = async (event) => {
+		console.log(stockData);
 		event.preventDefault();
 		try {
 			const existingStock = stocksData.find((data) => data.ticker === stockData.ticker);
@@ -33,6 +41,7 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 				});
 				if (response.data) {
 					setStockData({
+						user_id: `${user.id}`,
 						ticker: response.data.ticker,
 						company: response.data.company,
 						closingPrice: response.data.closingPrice,
@@ -53,7 +62,7 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 				});
 				if (response.data) {
 					setStockData({
-						user: `${user.id}`,
+						user_id: `${user.id}`,
 						ticker: response.data.ticker,
 						company: response.data.company,
 						closingPrice: response.data.closingPrice,

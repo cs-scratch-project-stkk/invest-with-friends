@@ -26,7 +26,6 @@ function Friends({ user, setUser }) {
 		id: '',
 		firstName: '',
 		lastName: '',
-		friendPortfolio: '',
 	});
 
 	const handleSubmit = async (event) => {

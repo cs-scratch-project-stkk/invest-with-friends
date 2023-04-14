@@ -93,11 +93,13 @@ function Navbar({ user, logout }) {
 		return user.firstName.charAt(0) + user.lastName.charAt(0);
 	};
 
-	const [open, setOpen] = useState(false);
+	// const [open, setOpen] = useState(false);
 
-	useEffect(() => {
-		setOpen(false);
-	}, []);
+	// useEffect(() => {
+	// 	setOpen(false);
+	// }, []);
+
+	const [open, setOpen] = useState(false);
 
 	return (
 		<>
@@ -156,9 +158,13 @@ function Navbar({ user, logout }) {
 											vertical: 'top',
 											horizontal: 'right',
 										}}>
-										<MenuItem>Profile</MenuItem>
-										<MenuItem>My account</MenuItem>
-
+										<MenuItem>
+											<Link to="/profile" style={{ textDecoration: 'none' }}>
+												<NavLink onClick={() => navigate('/profile')} variant="body2">
+													My Profile
+												</NavLink>
+											</Link>
+										</MenuItem>
 										<MenuItem>
 											<Link to="/" style={{ textDecoration: 'none' }}>
 												<NavLink onClick={logout} variant="body2">
