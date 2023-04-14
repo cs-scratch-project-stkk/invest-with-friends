@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import { Box, styled, Typography, Stack, CssBaseline, InputBase, TextField, Button, Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import SideNavbar from '../SideNavbar';
@@ -11,16 +10,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import StockForm from '../StockForm';
 import CustomPieChart from '../CustomPieChart';
 import toast, { Toaster } from 'react-hot-toast';
-import FriendsList from '../FriendsList';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableFriends from '../TableFriends';
 
 function Friends({ user, setUser }) {
 	const ADDFRIENDS_URL = '/api/addRelationship';
-	const GETFRIENDS_URL = `/api//relationships/${user.id}`;
+	const GETFRIENDS_URL = `/api/relationships/${user.id}`;
 
 	const [friends, setFriends] = useState([]);
 	const [friend, setFriend] = useState({
@@ -28,7 +27,6 @@ function Friends({ user, setUser }) {
 		firstName: '',
 		lastName: '',
 		friendPortfolio: '',
-		text: 'View',
 	});
 
 	const handleSubmit = async (event) => {
@@ -50,7 +48,7 @@ function Friends({ user, setUser }) {
 	}, []);
 
 	useEffect(() => {
-		const getAllFriends = async (friends) => {
+		const getAllFriends = async () => {
 			try {
 				const response = await axios.get(GETFRIENDS_URL, JSON.stringify({ friends }), {
 					headers: { 'Content-Type': 'application/json' },
@@ -67,7 +65,7 @@ function Friends({ user, setUser }) {
 					shares: '',
 				});
 			} catch (error) {
-				toast.error('The user was not found.');
+				toast.error('You have no friends');
 			}
 		};
 		getAllFriends();
@@ -105,31 +103,7 @@ function Friends({ user, setUser }) {
 							Add a Friend
 						</Button>
 					</Box>
-
-					<Link to="/friend_portfolio" target="_blank">
-						<div>click me</div>
-					</Link>
-
-					<Table size="small" sx={{ width: '55%', mt: '25px' }}>
-						<TableHead>
-							<TableRow>
-								<TableCell>First Name</TableCell>
-								<TableCell>Last Name</TableCell>
-								<TableCell>Portfolio</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{friends.map((friend, index) => (
-								<TableRow key={index}>
-									<TableCell>{friend.firstName}</TableCell>
-									<TableCell>{friend.lastName}</TableCell>
-									<Link to="/friend_portfolio" target="_blank">
-										<TableCell>View</TableCell>
-									</Link>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
+					<TableFriends friends={friends} />
 				</Container>
 			</Box>
 		</>
