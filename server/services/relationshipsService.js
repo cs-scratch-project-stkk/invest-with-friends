@@ -3,14 +3,16 @@ const db = require('../db/investWithFriendsDb');
 const relationshipsService = {};
 
 relationshipsService.addRelationship = async (user_id, first_name, last_name) => {
+	//query that pulls follow id
 	const query = 'SELECT user_id FROM users WHERE first_name=$1 and last_name=$2';
 	const params = [first_name, last_name];
-	const follow_id = await db.query(query, params);
+	const friend_id = await db.query(query, params);
 
-	const query2 = 'INSERT INTO relationships (user_id, follow_id) VALUES (142, 137)';
-	const params2 = [first_name, last_name];
-	const result = await db.query(query, params);
-
+	//query that pulls follow id
+	const follow_id = friend_id.rows[0].user_id;
+	const query2 = 'INSERT INTO relationships (user_id, follow_id) VALUES ($1, $2)';
+	const params2 = [user_id, follow_id];
+	const result = await db.query(query2, params2);
 	return result;
 };
 
