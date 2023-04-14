@@ -50,8 +50,6 @@ holdingsService.addHoldingExisting = async (user_id, ticker, shares) => {
 
 holdingsService.addHoldingNew = async (user_id, ticker, shares) => {
 
-    console.log('hit');
-
     const companyName = await getCompanyName(ticker);
     const closingPrice = await getClosingPriceAxios(ticker);
     const lastUpdated = Math.floor(Date.now()/1000);

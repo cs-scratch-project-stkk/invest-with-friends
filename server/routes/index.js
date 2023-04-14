@@ -7,6 +7,8 @@ const holdingsController = require('../controllers/holdingsController.js');
 const updateStocksController = require('../controllers/updateStocksController.js');
 const relationshipsController = require('../controllers/relationshipsController');
 
+const validator = require('../middleware/validator');
+
 
 router.post('/signup', userController.signup, (req, res) => {
   return res.status(200).json(res.locals.createdUser);
@@ -28,7 +30,7 @@ router.get('/getFriendHoldings/:id', holdingsController.getFriendHoldings, (req,
 })
 
 // post updated qtys (DB)
-router.post('/addHolding', holdingsController.addHolding, (req, res) => {
+router.post('/addHolding', validator.addHolding, holdingsController.addHolding, (req, res) => {
   return res.status(200).send(res.locals.holdings);
   })
 
