@@ -17,71 +17,80 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-function TableFriends( {friends} ) {
+function TableFriends({ friends }) {
+	const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+		'& .MuiDialogContent-root': {
+			padding: theme.spacing(2),
+		},
+		'& .MuiDialogActions-root': {
+			padding: theme.spacing(1),
+		},
+	}));
 
-  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
+	function BootstrapDialogTitle(props) {
+		const { children, onClose, ...other } = props;
 
-  function BootstrapDialogTitle(props) {
-    const { children, onClose, ...other } = props;
-  
-    return (
-      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
-  }
+		return (
+			<DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+				{children}
+				{onClose ? (
+					<IconButton
+						aria-label="close"
+						onClick={onClose}
+						sx={{
+							position: 'absolute',
+							right: 8,
+							top: 8,
+							color: (theme) => theme.palette.grey[500],
+						}}>
+						<CloseIcon />
+					</IconButton>
+				) : null}
+			</DialogTitle>
+		);
+	}
 
-  BootstrapDialogTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-  };
+	BootstrapDialogTitle.propTypes = {
+		children: PropTypes.node,
+		onClose: PropTypes.func.isRequired,
+	};
 
-  const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
 
-  return (
-    <>
-  <Table size="small" sx={{ width: '55%', mt: '25px' }}>
-    <TableHead>
-      <TableRow>
-        <TableCell>First Name</TableCell>
-        <TableCell>Last Name</TableCell>
-        <TableCell>Portfolio</TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {friends.map((friend, index) => (
-        <TableRow key={index}>
-          <TableCell>{friend.firstName}</TableCell>
-          <TableCell>{friend.lastName}</TableCell>
-          <TableCell>
+	return (
+		<>
+			<Table size="small" sx={{ width: '55%', mt: '25px' }}>
+				<TableHead>
+					<TableRow>
+						<TableCell>First Name</TableCell>
+						<TableCell>Last Name</TableCell>
+						<TableCell>Portfolio</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{friends.map((friend, index) => (
+						<TableRow key={index}>
+							<TableCell>{friend.firstName}</TableCell>
+							<TableCell>{friend.lastName}</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
+		</>
+	);
+}
+
+export default TableFriends;
+
+{
+	/* <TableCell>
           <Button variant="outlined" onClick={handleClickOpen}>
           View
           </Button>
@@ -104,13 +113,5 @@ function TableFriends( {friends} ) {
           </Button>
         </DialogActions>
       </BootstrapDialog>
-    </TableCell>
-    </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-    </>
-  )
+    </TableCell> */
 }
-
-export default TableFriends

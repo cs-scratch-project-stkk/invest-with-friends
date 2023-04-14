@@ -6,12 +6,12 @@ function CustomPieChart({ stocksData, setStocksData }) {
 
 	return (
 		<>
-			{/* <ResponsiveContainer width="100%" height="100%">
+			<ResponsiveContainer width="100%" height="100%">
 				<PieChart style={{ height: '500px' }}>
 					<Pie dataKey="percentHoldings" isAnimationActive={false} data={stocksData} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label />
 					<Tooltip />
 				</PieChart>
-			</ResponsiveContainer> */}
+			</ResponsiveContainer>
 		</>
 	);
 }
