@@ -15,6 +15,7 @@ function TablePortfolio({ stocksData, setStocksData, user, setUser }) {
 	// 	ticker = stock.ticker;
 	// 	return ticker;
 	// });
+	// console.log('TABLE RENDERED');
 
 	return (
 		<>
@@ -24,22 +25,23 @@ function TablePortfolio({ stocksData, setStocksData, user, setUser }) {
 						<TableCell>Ticker</TableCell>
 						<TableCell>Company</TableCell>
 						<TableCell>Closing Price</TableCell>
-						<TableCell>Shares</TableCell>
+						<TableCell>Stock Quantity</TableCell>
 						<TableCell>Market Value</TableCell>
 						<TableCell>% of Holdings</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{stocksData.map((stock, index) => (
-						<TableRow key={index}>
-							<TableCell>{stock.ticker}</TableCell>
-							<TableCell>{stock.company}</TableCell>
-							<TableCell>{stock.closingPrice}</TableCell>
-							<TableCell>{stock.shares}</TableCell>
-							<TableCell>{stock.marketValue}</TableCell>
-							<TableCell>{stock.percentHoldings}</TableCell>
-						</TableRow>
-					))}
+					{stocksData &&
+						stocksData.map((stock, index) => (
+							<TableRow key={index}>
+								<TableCell>{stock.ticker}</TableCell>
+								<TableCell>{stock.company_name}</TableCell>
+								<TableCell>{stock.closing_price}</TableCell>
+								<TableCell>{stock.stock_quantity}</TableCell>
+								<TableCell>{stock.market_value}</TableCell>
+								<TableCell>{stock.percent_of_holdings}</TableCell>
+							</TableRow>
+						))}
 				</TableBody>
 			</Table>
 		</>

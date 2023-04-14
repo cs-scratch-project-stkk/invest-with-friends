@@ -5,7 +5,7 @@ const holdingsService = {};
 
 holdingsService.getHoldings = async (id) => {
 	const query =
-		'SELECT holdings.stock_quantity, stocks.stock_id, stocks.ticker, stocks.company_name, stocks.closing_price, stocks.last_updated FROM "holdings" LEFT JOIN "stocks" ON "holdings"."stock_id"="stocks"."stock_id" WHERE "holder_id"=$1';
+		'SELECT holdings.holder_id AS user_id, holdings.stock_quantity, stocks.stock_id, stocks.ticker, stocks.company_name, stocks.closing_price, stocks.last_updated FROM "holdings" LEFT JOIN "stocks" ON "holdings"."stock_id"="stocks"."stock_id" WHERE "holder_id"=$1';
 	const params = [id];
 
 	let holdings = await db.query(query, params);
@@ -21,10 +21,13 @@ holdingsService.getHoldings = async (id) => {
 
 	//add percent of holdings property
 	for (let i = 0; i < holdings.length; i++) {
-		let percentOfHoldings = holdings[i].market_value / totalMarketVal;
-		holdings[i].percent_of_holdings = percentOfHoldings;
+		let percentOfHoldings = ((100 * holdings[i].market_value) / totalMarketVal).toFixed(2);
+		holdings[i].percent_of_holdings = `${percentOfHoldings} %`;
 	}
-
+	holdings.map((holding) => {
+		holding.closing_price = `$ ${holding.closing_price}`;
+		holding.market_value = `$ ${holding.market_value.toFixed(2)}`;
+	});
 	return holdings;
 };
 
@@ -71,7 +74,7 @@ holdingsService.addHoldingNew = async (user_id, ticker, shares) => {
 };
 
 holdingsService.updateHolding = async (user_id, ticker, shares) => {
-	const query = 'UPDATE holdings AS h SET stock_quantity = stock_quantity + $3 FROM stocks AS s WHERE h.stock_id = s.stock_id AND s.ticker = $2 AND h.holder_id = $1';
+	const query = 'UPDATE holdings AS h SET stock_quantity = $3 FROM stocks AS s WHERE h.stock_id = s.stock_id AND s.ticker = $2 AND h.holder_id = $1';
 	const params = [user_id, ticker, shares];
 	const holdings = await db.query(query, params);
 

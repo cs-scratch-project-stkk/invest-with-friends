@@ -93,12 +93,6 @@ function Navbar({ user, logout }) {
 		return user.firstName.charAt(0) + user.lastName.charAt(0);
 	};
 
-	// const [open, setOpen] = useState(false);
-
-	// useEffect(() => {
-	// 	setOpen(false);
-	// }, []);
-
 	const [open, setOpen] = useState(false);
 
 	return (
