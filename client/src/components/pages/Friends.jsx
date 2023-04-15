@@ -48,6 +48,11 @@ function Friends({ user, setUser }) {
 			if (response.data) {
 				setFriends(response.data);
 			}
+			setFriend({
+				user_id: '',
+				firstName: '',
+				lastName: '',
+			});
 		} catch (error) {
 			toast.error('Registration Failed');
 		}
