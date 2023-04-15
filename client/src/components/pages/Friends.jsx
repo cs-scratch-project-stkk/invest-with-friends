@@ -24,8 +24,8 @@ function Friends({ user, setUser }) {
 	const [friends, setFriends] = useState([]);
 	const [friend, setFriend] = useState({
 		user_id: '',
-		firstName: '',
-		lastName: '',
+		first_name: '',
+		last_name: '',
 	});
 
 	const userData = JSON.parse(localStorage.getItem('user'));
@@ -35,26 +35,47 @@ function Friends({ user, setUser }) {
 
 	useEffect(() => {
 		setFriend({ ...friend, user_id: userData.id });
-	}, [friend.firstName]);
+	}, [friend.first_name]);
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-		console.log(friend);
-		try {
-			const response = await axios.post(ADDFRIENDS_URL, JSON.stringify({ firstName: friend.firstName, lastName: friend.lastName }), {
-				headers: { 'Content-Type': 'application/json' },
-				withCredentials: true,
-			});
-			if (response.data) {
-				setFriends(response.data);
+	useEffect(() => {
+		const getAllFriends = async () => {
+			try {
+				const response = await axios.get(GETFRIENDS_URL);
+				if (response.data) {
+					setFriends(response.data);
+				}
+			} catch (error) {
+				toast.error('Server did not retrieve data appropriately.');
 			}
+		};
+		getAllFriends();
+	}, []);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			const existingFriends = friends.find((data) => data.last_name === friend.last_name);
+			if (!existingFriends) {
+				const response = await axios.post(ADDFRIENDS_URL, JSON.stringify(friend), {
+					headers: { 'Content-Type': 'application/json' },
+					withCredentials: true,
+				});
+				if (response.data) {
+					setFriends(response.data);
+					localStorage.setItem('friends', JSON.stringify(response.data));
+				}
+			} else {
+				toast.error('You guys are already friends.');
+			}
+
 			setFriend({
 				user_id: '',
-				firstName: '',
-				lastName: '',
+				first_name: '',
+				last_name: '',
 			});
 		} catch (error) {
-			toast.error('Registration Failed');
+			toast.error('Friend does not exist in the database. ');
 		}
 	};
 
@@ -92,20 +113,20 @@ function Friends({ user, setUser }) {
 						<TextField
 							size="small"
 							placeholder="First Name"
-							id="firstName"
-							name="firstName"
+							id="first_name"
+							name="first_name"
 							label="First Name"
-							value={friend.firstName}
-							onChange={(e) => setFriend({ ...friend, firstName: e.target.value })}
+							value={friend.first_name}
+							onChange={(e) => setFriend({ ...friend, first_name: e.target.value })}
 						/>
 						<TextField
 							size="small"
 							placeholder="Last Name"
-							id="lastName"
-							name="lastName"
+							id="last_name"
+							name="last_name"
 							label="Last Name"
-							value={friend.lastName}
-							onChange={(e) => setFriend({ ...friend, lastName: e.target.value })}
+							value={friend.last_name}
+							onChange={(e) => setFriend({ ...friend, last_name: e.target.value })}
 						/>
 						<Button type="submit" variant="contained">
 							Add a Friend

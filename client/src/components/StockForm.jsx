@@ -48,6 +48,8 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 				if (response.data) {
 					// setStockData(response.data[response.data.length - 1]);
 					setStocksData(response.data);
+					localStorage.setItem('stocksData', JSON.stringify(response.data));
+
 					// setStocksData((prev) => {
 					// 	console.log(prev);
 					// 	const portfolio = [...prev, stockData];
@@ -64,6 +66,8 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 				if (response.data) {
 					// setStockData(response.data[response.data.length - 1]);
 					setStocksData(response.data);
+					localStorage.setItem('stocksData', JSON.stringify(response.data));
+
 					// setStocksData((prev) => {
 					// 	console.log(prev);
 					// 	const portfolio = [...prev, stockData];
@@ -104,6 +108,8 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 					if (response.data) {
 						// setStockData(response.data[response.data.length - 1]);
 						setStocksData(response.data);
+						localStorage.setItem('stocksData', JSON.stringify(response.data));
+
 						// setStocksData((prev) => {
 						// 	console.log(prev);
 						// 	const portfolio = [...prev, stockData];
@@ -118,6 +124,8 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 					if (response.data) {
 						// setStockData(response.data[response.data.length - 1]);
 						setStocksData(response.data);
+						localStorage.setItem('stocksData', JSON.stringify(response.data));
+
 						// setStocksData((prev) => {
 						// 	console.log(prev);
 						// 	const portfolio = [...prev, stockData];
@@ -155,6 +163,22 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 		}
 	};
 
+	const publish = async (event) => {
+		event.preventDefault();
+		try {
+			const response = axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
+				headers: { 'Content-Type': 'application/json' },
+				withCredentials: true,
+			});
+			if (response.data) {
+				localStorage.setItem('stocksData', JSON.stringify(response.data));
+				<NewsFeed portfolio={response.data} stocksData={stocksData} setStocksData={setStocksData} />;
+			}
+		} catch (error) {
+			toast.error('Sorry, you cannot publish.');
+		}
+	};
+
 	return (
 		<>
 			<Box p={2}>
@@ -189,6 +213,9 @@ function StockForm({ stocksData, setStocksData, user, setUser }) {
 					</Button>
 					<Button color="error" size="medium" type="submit" variant="contained" onClick={sellOnClick}>
 						SELL
+					</Button>
+					<Button variant="outlined" size="small" sx={{ width: 200, marginLeft: '10px' }} onClick={publish}>
+						Publish to Newsfeed
 					</Button>
 					{/* <IconButton color="primary" sx={{ ml: '10px' }} onClick={refresh}>
 						<RefreshIcon fontSize="small" sx={{ color: '#0F1B4C' }} />
