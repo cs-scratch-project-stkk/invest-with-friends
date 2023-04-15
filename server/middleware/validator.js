@@ -46,4 +46,28 @@ validator.deleteHolding = (req, res, next) => {
 	}
 };
 
+validator.relationships = (req, res, next) => {
+  const { user_id, first_name, last_name } = req.body;
+	if (typeof user_id === 'number' && typeof ticker === 'string') {
+		return next();
+	} else {
+		return next(`
+      error: req.body
+      expected: 
+        {
+          user_id: <number>,
+          first_name: <string>,
+          last_name: <string>,
+        }
+      received:
+        {
+          user_id: ${user_id} <${typeof user_id}>,   
+          first_name: ${first_name} <${typeof first_name}>,
+          last_name: ${last_name} <${typeof last_name}>,
+        }
+      req.body: ${JSON.stringify(req.body)}
+    `);
+	}
+}
+
 module.exports = validator;
