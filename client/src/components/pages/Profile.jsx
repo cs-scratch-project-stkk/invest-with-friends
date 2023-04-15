@@ -59,23 +59,10 @@ function Profile({ user, setUser }) {
 		getAllStocks();
 	}, []);
 
-	// useEffect(() => {
-	// 	const getAllStocks = async () => {
-	// 		console.log('B');
-	// 		try {
-	// 			const response = await axios.get(HOLDINGS_URL);
-	// 			if (response.data) {
-	// 				setStocksData(response.data);
-	// 			}
-	// 			if (response.data) {
-	// 				setStocksData(response.data);
-	// 			}
-	// 		} catch (error) {
-	// 			toast.error('Server did not retrieve data appropriately.');
-	// 		}
-	// 	};
-	// 	getAllStocks();
-	// }, [stocksData]);
+	// const [loading, setLoading] = useState(false);
+	// const Loading = () => {
+	// 	return <p>Loading...</p>;
+	// };
 
 	return (
 		<>

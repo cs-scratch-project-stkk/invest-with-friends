@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 function CustomPieChart({ stocksData, setStocksData }) {
-	// console.log(stocksData);
+	console.log(stocksData);
 
 	return (
 		<>

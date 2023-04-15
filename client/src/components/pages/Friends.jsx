@@ -23,13 +23,23 @@ function Friends({ user, setUser }) {
 
 	const [friends, setFriends] = useState([]);
 	const [friend, setFriend] = useState({
-		id: '',
+		user_id: '',
 		firstName: '',
 		lastName: '',
 	});
 
+	const userData = JSON.parse(localStorage.getItem('user'));
+	useEffect(() => {
+		setUser(JSON.parse(localStorage.getItem('user')));
+	}, []);
+
+	useEffect(() => {
+		setFriend({ ...friend, user_id: userData.id });
+	}, [friend.firstName]);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		console.log(friend);
 		try {
 			const response = await axios.post(ADDFRIENDS_URL, JSON.stringify({ firstName: friend.firstName, lastName: friend.lastName }), {
 				headers: { 'Content-Type': 'application/json' },
@@ -42,30 +52,27 @@ function Friends({ user, setUser }) {
 			toast.error('Registration Failed');
 		}
 	};
-	useEffect(() => {
-		setUser(JSON.parse(localStorage.getItem('user')));
-	}, []);
 
-	useEffect(() => {
-		const getAllFriends = async () => {
-			try {
-				const response = await axios.get(GETFRIENDS_URL);
-				if (response.data) {
-					setFriends((prev) => {
-						const friendsList = [...prev, friend];
-						return friendsList;
-					});
-				}
-				setFriend({
-					ticker: '',
-					stock_quantity: '',
-				});
-			} catch (error) {
-				toast.error('You have no friends');
-			}
-		};
-		getAllFriends();
-	}, []);
+	// useEffect(() => {
+	// 	const getAllFriends = async () => {
+	// 		try {
+	// 			const response = await axios.get(GETFRIENDS_URL);
+	// 			if (response.data) {
+	// 				setFriends((prev) => {
+	// 					const friendsList = [...prev, friend];
+	// 					return friendsList;
+	// 				});
+	// 			}
+	// 			setFriend({
+	// 				ticker: '',
+	// 				stock_quantity: '',
+	// 			});
+	// 		} catch (error) {
+	// 			toast.error('You have no friends');
+	// 		}
+	// 	};
+	// 	getAllFriends();
+	// }, []);
 
 	return (
 		<>

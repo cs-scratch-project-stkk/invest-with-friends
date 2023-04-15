@@ -10,13 +10,6 @@ import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 import CustomPieChart from './CustomPieChart';
 
 function TablePortfolio({ stocksData, setStocksData, user, setUser }) {
-	// let ticker = '';
-	// const stock = stocksData.map((stock) => {
-	// 	ticker = stock.ticker;
-	// 	return ticker;
-	// });
-	// console.log('TABLE RENDERED');
-
 	return (
 		<>
 			<Table size="small">
