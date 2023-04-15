@@ -95,10 +95,6 @@ function Navbar({ user, logout }) {
 
 	const [open, setOpen] = useState(false);
 
-	useEffect(() => {
-		setOpen(false);
-	}, []);
-
 	return (
 		<>
 			<Box sx={{ backgroundColor: '#E6F0FF' }}>
@@ -156,9 +152,13 @@ function Navbar({ user, logout }) {
 											vertical: 'top',
 											horizontal: 'right',
 										}}>
-										<MenuItem>Profile</MenuItem>
-										<MenuItem>My account</MenuItem>
-
+										<MenuItem>
+											<Link to="/profile" style={{ textDecoration: 'none' }}>
+												<NavLink onClick={() => navigate('/profile')} variant="body2">
+													My Profile
+												</NavLink>
+											</Link>
+										</MenuItem>
 										<MenuItem>
 											<Link to="/" style={{ textDecoration: 'none' }}>
 												<NavLink onClick={logout} variant="body2">

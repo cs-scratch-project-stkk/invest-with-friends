@@ -11,9 +11,8 @@ import CustomPieChart from '../CustomPieChart';
 import toast, { Toaster } from 'react-hot-toast';
 import CustomButton from '../CustomButton';
 
-
 function Profile({ user, setUser }) {
-	const HOLDINGS_URL = `/holdings/${user.id}`;
+	const HOLDINGS_URL = `api/getHoldings/${user.id}`;
 
 	const Search = styled('div')(({ theme }) => ({
 		backgroundColor: '#F2F2F2',
@@ -24,23 +23,21 @@ function Profile({ user, setUser }) {
 
 	const [stocksData, setStocksData] = useState([]);
 
-	const publish = async(event) => {
+	const publish = async (event) => {
 		event.preventDefault();
 		try {
-		  const response = axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
+			const response = axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
 				headers: { 'Content-Type': 'application/json' },
 				withCredentials: true,
 			});
 			if (response.data) {
 				localStorage.setItem('stocksData', JSON.stringify(response.data));
-				<NewsFeed portfolio={response.data} stocksData = {stocksData} setStocksData={setStocksData}/>
+				<NewsFeed portfolio={response.data} stocksData={stocksData} setStocksData={setStocksData} />;
 			}
-		
-		
 		} catch (error) {
-			toast.error('Sorry, you cannot publish.')
+			toast.error('Sorry, you cannot publish.');
 		}
-	}
+	};
 
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem('user')));
@@ -48,11 +45,10 @@ function Profile({ user, setUser }) {
 
 	useEffect(() => {
 		const getAllStocks = async () => {
+			console.log('A');
 			try {
-				const response = await axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
-					headers: { 'Content-Type': 'application/json' },
-					withCredentials: true,
-				});
+				const response = await axios.get(HOLDINGS_URL);
+				console.log(response.data);
 				if (response.data) {
 					setStocksData(response.data);
 				}
@@ -63,22 +59,23 @@ function Profile({ user, setUser }) {
 		getAllStocks();
 	}, []);
 
-	useEffect(() => {
-		const getAllStocks = async () => {
-			try {
-				const response = await axios.get(HOLDINGS_URL, JSON.stringify({ stocksData }), {
-					headers: { 'Content-Type': 'application/json' },
-					withCredentials: true,
-				});
-				if (response.data) {
-					setStocksData(response.data);
-				}
-			} catch (error) {
-				toast.error('Server did not retrieve data appropriately.');
-			}
-		};
-		getAllStocks();
-	}, [stocksData]);
+	// useEffect(() => {
+	// 	const getAllStocks = async () => {
+	// 		console.log('B');
+	// 		try {
+	// 			const response = await axios.get(HOLDINGS_URL);
+	// 			if (response.data) {
+	// 				setStocksData(response.data);
+	// 			}
+	// 			if (response.data) {
+	// 				setStocksData(response.data);
+	// 			}
+	// 		} catch (error) {
+	// 			toast.error('Server did not retrieve data appropriately.');
+	// 		}
+	// 	};
+	// 	getAllStocks();
+	// }, [stocksData]);
 
 	return (
 		<>
@@ -94,7 +91,9 @@ function Profile({ user, setUser }) {
 							<StockForm stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />
 							<TablePortfolio stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />
 							<CustomPieChart stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />
-							<Button variant="outlined" sx={{width:200, mt:'20px'}} onClick={publish}>Publish to Newsfeed</Button>
+							<Button variant="outlined" sx={{ width: 200, mt: '20px' }} onClick={publish}>
+								Publish to Newsfeed
+							</Button>
 						</Stack>
 					</Stack>
 				</Container>
@@ -104,5 +103,3 @@ function Profile({ user, setUser }) {
 }
 
 export default Profile;
-
-

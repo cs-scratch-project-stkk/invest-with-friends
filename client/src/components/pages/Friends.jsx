@@ -26,7 +26,6 @@ function Friends({ user, setUser }) {
 		id: '',
 		firstName: '',
 		lastName: '',
-		friendPortfolio: '',
 	});
 
 	const handleSubmit = async (event) => {
@@ -50,10 +49,7 @@ function Friends({ user, setUser }) {
 	useEffect(() => {
 		const getAllFriends = async () => {
 			try {
-				const response = await axios.get(GETFRIENDS_URL, JSON.stringify({ friends }), {
-					headers: { 'Content-Type': 'application/json' },
-					withCredentials: true,
-				});
+				const response = await axios.get(GETFRIENDS_URL);
 				if (response.data) {
 					setFriends((prev) => {
 						const friendsList = [...prev, friend];
@@ -62,7 +58,7 @@ function Friends({ user, setUser }) {
 				}
 				setFriend({
 					ticker: '',
-					shares: '',
+					stock_quantity: '',
 				});
 			} catch (error) {
 				toast.error('You have no friends');
