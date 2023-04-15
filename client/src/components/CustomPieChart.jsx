@@ -53,10 +53,10 @@ function PieChart({ stocksData, setStocksData }) {
 
 	return (
 		<>
-			<Table size="small" sx={{ mt: '40px' }}>
+			<Table size="medium" sx={{ mt: '40px' }}>
 				<TableHead>
 					<TableRow>
-						<TableCell>My Portfolio</TableCell>
+						<TableCell sx={{ fontSize: '20px', backgroundColor: 'none' }}>My Portfolio</TableCell>
 					</TableRow>
 				</TableHead>
 			</Table>

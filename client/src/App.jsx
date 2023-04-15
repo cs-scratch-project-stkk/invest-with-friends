@@ -36,7 +36,9 @@ function App() {
 		localStorage.clear();
 		console.log('logged out confirmed');
 	};
-
+	useEffect(() => {
+		setUser(JSON.parse(localStorage.getItem('user')));
+	}, []);
 	return (
 		<>
 			<Router>

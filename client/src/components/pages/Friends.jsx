@@ -17,7 +17,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFriends from '../TableFriends';
 
-function Friends({ user, setUser }) {
+function Friends({ user }) {
 	const ADDFRIENDS_URL = '/api/addRelationship';
 	const GETFRIENDS_URL = `/api/relationships/${user.id}`;
 
@@ -29,27 +29,26 @@ function Friends({ user, setUser }) {
 	});
 
 	const userData = JSON.parse(localStorage.getItem('user'));
-	useEffect(() => {
-		setUser(JSON.parse(localStorage.getItem('user')));
-	}, []);
 
 	useEffect(() => {
 		setFriend({ ...friend, user_id: userData.id });
 	}, [friend.first_name]);
 
 	useEffect(() => {
-		const getAllFriends = async () => {
-			try {
-				const response = await axios.get(GETFRIENDS_URL);
-				if (response.data) {
-					setFriends(response.data);
+		if (user.id) {
+			const getAllFriends = async () => {
+				try {
+					const response = await axios.get(GETFRIENDS_URL);
+					if (response.data) {
+						setFriends(response.data);
+					}
+				} catch (error) {
+					toast.error('Server did not retrieve data appropriately.');
 				}
-			} catch (error) {
-				toast.error('Server did not retrieve data appropriately.');
-			}
-		};
-		getAllFriends();
-	}, []);
+			};
+			getAllFriends();
+		}
+	}, [user]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
