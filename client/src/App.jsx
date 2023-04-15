@@ -37,6 +37,9 @@ function App() {
 		console.log('logged out confirmed');
 	};
 	useEffect(() => {
+		if (!JSON.parse(localStorage.getItem('user'))) {
+			localStorage.setItem('user', JSON.stringify(user));
+		}
 		setUser(JSON.parse(localStorage.getItem('user')));
 	}, []);
 	return (
