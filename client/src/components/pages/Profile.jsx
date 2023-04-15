@@ -23,24 +23,27 @@ function Profile({ user, setUser }) {
 
 	const [stocksData, setStocksData] = useState([]);
 
-	useEffect(() => {
-		setUser(JSON.parse(localStorage.getItem('user')));
-	}, []);
+	// useEffect(() => {
+	// 	setUser(JSON.parse(localStorage.getItem('user')));
+	// }, []);
 
 	useEffect(() => {
-		const getAllStocks = async () => {
-			console.log('A');
-			try {
-				const response = await axios.get(HOLDINGS_URL);
-				if (response.data) {
-					setStocksData(response.data);
+		console.log(user);
+		if (user.id) {
+			const getAllStocks = async () => {
+				console.log('A');
+				try {
+					const response = await axios.get(HOLDINGS_URL);
+					if (response.data) {
+						setStocksData(response.data);
+					}
+				} catch (error) {
+					toast.error('Server did not retrieve data appropriately.');
 				}
-			} catch (error) {
-				toast.error('Server did not retrieve data appropriately.');
-			}
-		};
-		getAllStocks();
-	}, []);
+			};
+			getAllStocks();
+		}
+	}, [user]);
 
 	// const [loading, setLoading] = useState(false);
 	// const Loading = () => {
@@ -55,7 +58,7 @@ function Profile({ user, setUser }) {
 					<SideNavbar />
 				</Container>
 				<Container sx={{ display: 'flex', flexDirection: 'column', gap: '10px', paddingBottom: '10px' }}>
-					<Typography sx={{ fontSize: '24px' }}>Hello {user.firstName}! </Typography>
+					<Typography sx={{ fontSize: '24px', paddingLeft: '15px' }}>Hello {user.firstName}! </Typography>
 					<Stack direction="row">
 						<Stack direction="column">
 							<StockForm stocksData={stocksData} setStocksData={setStocksData} user={user} setUser={setUser} />

@@ -20,6 +20,7 @@ import CustomPieChart from './CustomPieChart';
 import FriendPieChart from './FriendPieChart';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import './TableFriends.css';
 
 function TableFriends({ friends }) {
 	const BootstrapDialog = styled(Dialog)(({ theme }) => ({
