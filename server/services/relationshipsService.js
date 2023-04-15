@@ -10,7 +10,7 @@ relationshipsService.addRelationship = async (user_id, first_name, last_name) =>
 
 	//query that pulls follow id
 	const follow_id = friend_id.rows[0].user_id;
-	const query2 = 'INSERT INTO relationships (user_id, follow_id) VALUES ($1, $2)';
+	const query2 = 'INSERT INTO relationships (user_id, follow_id) SELECT $1, $2 WHERE NOT EXISTS (SELECT relationship_id FROM relationships WHERE user_id = $1 AND follow_id = $2)';
 	const params2 = [user_id, follow_id];
 	const result = await db.query(query2, params2);
 	return result;
