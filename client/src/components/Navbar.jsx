@@ -98,7 +98,7 @@ function Navbar({ user, logout }) {
 	return (
 		<>
 			<Box sx={{ backgroundColor: '#E6F0FF' }}>
-				<NavbarContainer disableGutters maxWidth={false}>
+				<NavbarContainer>
 					<Box
 						sx={{
 							display: 'flex',
