@@ -29,7 +29,7 @@
 Invest with Friends is a social media platform where you can connect and learn from your friends to become more financially educated.
 </p>
 <br/>
-<p align="center">
+<p>
   <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/homepage.png" width=90% >
   <div>Landing Page</div>
   <br/>
