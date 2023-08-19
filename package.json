@@ -1,0 +1,19 @@
+{
+  "name": "invest-with-friends",
+  "version": "1.0.0",
+  "description": "invest-with-friends",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\"",
+    "dev": "concurrently \"cd ./server && npm run dev\" \"cd ./client && npm run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs-scratch-project-stkk/invest-with-friends.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cs-scratch-project-stkk/invest-with-friends/issues"
+  },
+  "homepage": "https://github.com/cs-scratch-project-stkk/invest-with-friends#readme"
+}
