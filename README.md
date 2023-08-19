@@ -7,8 +7,6 @@
     <br />
   </h2>
 
-<hr>
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -21,7 +19,6 @@
     <li><a href="#meet-our-team">Meet our Team</a></li>
   </ol>
 </details>
-<hr>
 
 ## <b>Overview</b>
 
