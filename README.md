@@ -11,7 +11,6 @@
   <ol>
     <li><a href="#overview">Overview</a></li>
     <li><a href="#installation--getting-started">Installation Getting / Started</a></li>
-    <li><a href="#functionality">Functionality</a></li>
     <li><a href="#tech-stack">Tech Stack</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#meet-our-team">Meet our Team</a></li>
