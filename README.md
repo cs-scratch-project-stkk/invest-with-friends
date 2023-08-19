@@ -36,11 +36,11 @@ Invest with Friends is a social media platform where you can connect and learn f
 </p>
 <br/>
 <p align="center">
-  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/homepage" width=90% >
+  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/homepage.png" width=90% >
   <br/>
-  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/my-portfolio-page" width=90% >
+  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/my-portfolio-page.png" width=90% >
   <br/>
-  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/friends-page" width=90% >
+  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/friends-page.png" width=90% >
 </p>
 <br/>
 
