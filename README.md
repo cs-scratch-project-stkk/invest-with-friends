@@ -27,12 +27,12 @@ Invest with Friends is a social media platform where you can connect and learn f
 </p>
 <br/>
 <p>
-  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/homepage.png" width=90% >
   <div>Landing Page</div>
-  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/my-portfolio-page.png" width=90% >
+  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/homepage.png" width=90% >
   <div>My Portfolio Page</div>
-  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/friends-page.png" width=90% >
+  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/my-portfolio-page.png" width=90% >
   <div>My Friends Page</div>
+  <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/friends-page.png" width=90% >
 </p>
 <br/>
 
@@ -52,9 +52,6 @@ npm install && cd client && npm install && cd ../server && npm install
 5. Run `http://localhost:3000/` on your browser to start sharing your investment ideas with your friends!
     <br/>
     <br/>
-
-## <b>Functionality</b>
-
 
 ## <b>Tech Stack</b>
 
