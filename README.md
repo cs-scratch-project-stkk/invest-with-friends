@@ -4,7 +4,6 @@
   <h2 align="center">
     A social media platform to connect and find how your friends are investing
     <br />
-    <br />
   </h2>
 
 <!-- TABLE OF CONTENTS -->
@@ -25,7 +24,6 @@
 <p align="left">
 Invest with Friends is a social media platform where you can connect and learn from your friends to become more financially educated.
 </p>
-<br/>
 <p>
   <div>Landing Page</div>
   <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/homepage.png" width=90% >
@@ -50,8 +48,6 @@ npm install && cd client && npm install && cd ../server && npm install
    
 4. Run `npm run dev` in root directory of extension.
 5. Run `http://localhost:3000/` on your browser to start sharing your investment ideas with your friends!
-    <br/>
-    <br/>
 
 ## <b>Tech Stack</b>
 
@@ -71,7 +67,6 @@ As part of the open source community, we'd like to welcome those who'd like to c
 Thank you!
 
   <p align="left">
-      <br />
       <a href="https://github.com/cs-scratch-project-stkk/invest-with-friends/issues">Report Bug / Request Feature</a>
   </p>
 
