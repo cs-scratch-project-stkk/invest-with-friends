@@ -2,7 +2,7 @@
   <h1 align="center"><b>Invest with Friends</b></h1>
 </p>
   <h2 align="center">
-    VS Code extension providing developers with real-time visualization of the data flow of RESTful API applications.
+    A social media platform to connect and find how your friends are investing
     <br />
     <br />
   </h2>
@@ -74,9 +74,6 @@ npm install && cd client && npm install && cd ../server && npm install
 - [PostgreSQL](https://www.postgresql.org/)
 - [Node.js](https://nodejs.org)
 - [Express](https://expressjs.com/)
-
-  <br/>
-  <br/>
 
 ## <b>Contributing</b>
 
