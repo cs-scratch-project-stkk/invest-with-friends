@@ -3,7 +3,6 @@
 </p>
   <h2 align="center">
     A social media platform to connect and find how your friends are investing
-    <br />
   </h2>
 
 <!-- TABLE OF CONTENTS -->
@@ -32,7 +31,6 @@ Invest with Friends is a social media platform where you can connect and learn f
   <div>My Friends Page</div>
   <img  src="https://raw.githubusercontent.com/cs-scratch-project-stkk/invest-with-friends/main/client/src/media/friends-page.png" width=90% >
 </p>
-<br/>
 
 ## <b>Installation / Getting Started</b>
 
