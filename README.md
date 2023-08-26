@@ -59,7 +59,7 @@ npm install && cd client && npm install && cd ../server && npm install
 
 ## <b>Contributing</b>
 
-As part of the open source community, we'd like to welcome those who'd like to contribute to this product. We released Trace in hopes of helping developers efficiently onboard new codebases. If you found this project useful, feel free to give it a star to help increase the visibility of this product. If you found any issues with this product, please report them with the 'Issues' tab or submit a PR.
+As part of the open source community, we'd like to welcome those who'd like to contribute to this product. We released Invest with Friends in hopes of helping developers efficiently onboard new codebases. If you found this project useful, feel free to give it a star to help increase the visibility of this product. If you found any issues with this product, please report them with the 'Issues' tab or submit a PR.
 
 Thank you!
 
